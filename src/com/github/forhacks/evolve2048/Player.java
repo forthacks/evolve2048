@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-class Player {
+class Player implements Cloneable {
 
     private ArrayList<Layer> layers;
 
@@ -18,6 +18,15 @@ class Player {
 
     private Player(ArrayList<Layer> l) {
         layers = l;
+    }
+
+    @Override
+    public Player clone(){
+        ArrayList<Layer> newLayer = new ArrayList<>();
+        for (Layer i : layers) {
+            newLayer.add(i.c());
+        }
+        return new Player(newLayer);
     }
 
     void mutate() {
@@ -167,6 +176,13 @@ class Player {
 
             return l;
 
+        }
+        Layer c() {
+            ArrayList<Connection> newc = new ArrayList<>();
+            for (Connection c : newc) {
+                newc.add(c);
+            }
+            return new Layer(nodes, newc);
         }
     }
     static boolean chance(Double d) {

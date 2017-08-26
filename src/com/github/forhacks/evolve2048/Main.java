@@ -14,13 +14,13 @@ public class Main {
         game.setSize(500, 520);
         game.setResizable(false);
 
-        g = new Game(true);
+        g = new Game(false);
 
         game.add(g);
 
         game.setLocationRelativeTo(null);
         game.setVisible(true);
-
+        new Evolution();
     }
 
 }
