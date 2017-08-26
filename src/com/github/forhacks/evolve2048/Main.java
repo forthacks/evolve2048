@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
 
-    private static Game game;
+    public static Game g;
 
     public static void main(String[] args) {
 
@@ -14,7 +14,9 @@ public class Main {
         game.setSize(500, 520);
         game.setResizable(false);
 
-        game.add(new Game(true));
+        g = new Game(true);
+
+        game.add(g);
 
         game.setLocationRelativeTo(null);
         game.setVisible(true);
