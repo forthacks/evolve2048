@@ -6,7 +6,7 @@ public class Main {
 
     public static Game g;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         JFrame game = new JFrame();
         game.setTitle("2048");

@@ -13,8 +13,8 @@ class Player implements Cloneable {
     private static final int MAX_INIT_NODES = 10;
     private static final int MIN_INIT_NODES = 4;
     private static final double REMOVE_PROB = 0.00005;
-    private static final double ADD_PROB = 0.005;
-    private static final double LAYER_ADD_PROB = 0.001;
+    private static final double ADD_PROB = 0.05;
+    private static final double LAYER_ADD_PROB = 0.01;
 
     private Player(ArrayList<Layer> l) {
         layers = l;

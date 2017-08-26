@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 1000;
+    private static final int PLAYER_NUM = 6;
     private static final int NUM_TRIAL = 5;
     private static final int GEN_NUM = 10;
     private static final double KILL_RATE = 0.5;
@@ -15,12 +15,13 @@ public class Evolution {
 
     int score = 0;
 
-    public Evolution() {
+    public Evolution() throws InterruptedException {
 
         for (int i = 0; i < PLAYER_NUM; i++) {
             players[i] = Player.generate();
         }
         for (int i = 0; i < GEN_NUM; i++) {
+            int max=0;
             Arrays.fill(scores, 0);
             for (int j = 0; j < PLAYER_NUM; j++) {
                 score = 0;
@@ -30,13 +31,15 @@ public class Evolution {
                 }
                 scores[j] = score/NUM_TRIAL;
 //                System.out.println(scores[j]);
+                max = Math.max(max, scores[j]);
             }
+            System.out.println(max);
             System.out.println(i);
             Integer[] indices = new Integer[PLAYER_NUM];
             for (int j = 0; j < indices.length; j++) {
                 indices[j] = j;
             }
-            Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (scores[o])));
+            Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
             Player[] tempPlayers = players.clone();
             for (int j = 0; j < indices.length; j++) {
                 players[j] = tempPlayers[indices[j]];
@@ -46,7 +49,14 @@ public class Evolution {
                 players[j].mutate();
             }
         }
-
+        Main.g.initGame();
+        for (;;) {
+            if (!Main.g.game) {
+                break;
+            }
+            Main.g.move(players[0].run(Main.g.grid));
+            Thread.sleep(100);
+        }
     }
 
     public int run(Player p) {
