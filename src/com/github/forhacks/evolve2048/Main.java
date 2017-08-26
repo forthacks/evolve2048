@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public static Game g;
+    public static GameGUI g;
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -14,7 +14,7 @@ public class Main {
         game.setSize(500, 520);
         game.setResizable(false);
 
-        g = new Game(false);
+        g = new GameGUI(false);
 
         game.add(g);
 

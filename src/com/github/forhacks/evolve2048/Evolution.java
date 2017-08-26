@@ -51,22 +51,22 @@ public class Evolution {
         }
         Main.g.initGame();
         for (;;) {
-            if (!Main.g.game) {
+            if (!Main.g.game.game) {
                 break;
             }
-            Main.g.move(players[0].run(Main.g.grid));
+            Main.g.move(players[0].run(Main.g.game.grid));
             Thread.sleep(100);
         }
     }
 
     public int run(Player p) {
         for (;;) {
-            if (!Main.g.game) {
+            if (!Main.g.game.game) {
                 break;
             }
-            Main.g.move(p.run(Main.g.grid));
+            Main.g.move(p.run(Main.g.game.grid));
         }
 //        System.out.println(Main.g.score);
-        return Main.g.score;
+        return Main.g.game.score;
     }
 }

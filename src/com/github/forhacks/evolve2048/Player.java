@@ -85,7 +85,7 @@ class Player implements Cloneable {
         Arrays.sort(indices, Comparator.comparingInt((Integer o) -> newMovement[o]));
         // Arrays.sort(indices, (Integer o1, Integer o2) -> newMovement[o1] - newMovement[o2]);
         int i = 0;
-        while (!Main.g.canMove(indices[i])) i++;
+        while (!Main.g.game.canMove(indices[i])) i++;
         return indices[i];
     }
 
