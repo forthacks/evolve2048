@@ -14,7 +14,7 @@ public class Main {
         game.setSize(500, 520);
         game.setResizable(false);
 
-        game.add(new Game());
+        game.add(new Game(true));
 
         game.setLocationRelativeTo(null);
         game.setVisible(true);
