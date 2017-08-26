@@ -8,14 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game extends JPanel {
+class Game extends JPanel {
 
     // grid[row][column]
-    int[][] grid;
+    private int[][] grid;
 
-    Random random = new Random();
+    private Random random = new Random();
 
-    boolean game;
+    private boolean game;
+
+    public int score = 0;
 
     public Game(boolean allowKeypresses) {
 
@@ -66,7 +68,7 @@ public class Game extends JPanel {
 
     }
 
-    boolean canMove() {
+    private boolean canMove() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if ((i < 3 && grid[i][j] == grid[i+1][j]) || ((j < 3) && grid[i][j] == grid[i][j+1])) {
@@ -115,7 +117,7 @@ public class Game extends JPanel {
         }
     }
 
-    public Color getBackground(int value) {
+    private Color getBackground(int value) {
         switch (value) {
             case 2:    return new Color(0xeee4da);
             case 4:    return new Color(0xede0c8);
@@ -132,7 +134,7 @@ public class Game extends JPanel {
         return new Color(0xcdc1b4);
     }
 
-    public void addTile() {
+    private void addTile() {
 
         List<int[]> available = new ArrayList<>();
 
@@ -185,6 +187,8 @@ public class Game extends JPanel {
                     if (j - moves - 1 >= 0 && grid[j - moves - 1][i] == grid[j - moves][i]) {
                         grid[j - moves - 1][i] *= 2;
                         grid[j - moves][i] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
@@ -209,6 +213,7 @@ public class Game extends JPanel {
                     if (j - moves - 1 >= 0 && grid[i][j - moves - 1] == grid[i][j - moves]) {
                         grid[i][j - moves - 1] *= 2;
                         grid[i][j - moves] = 0;
+                        score += grid[j - moves - 1][i];
                         moves++;
                     }
 
@@ -234,6 +239,8 @@ public class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[j + moves + 1][i] == grid[j + moves][i]) {
                         grid[j + moves + 1][i] *= 2;
                         grid[j + moves][i] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
@@ -258,6 +265,8 @@ public class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[i][j + moves + 1] == grid[i][j + moves]) {
                         grid[i][j + moves + 1] *= 2;
                         grid[i][j + moves] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
