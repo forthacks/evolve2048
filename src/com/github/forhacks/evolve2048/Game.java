@@ -17,6 +17,8 @@ class Game extends JPanel {
 
     private boolean game;
 
+    public int score = 0;
+
     public Game(boolean allowKeypresses) {
 
         setPreferredSize(new Dimension(500, 520));
@@ -185,6 +187,8 @@ class Game extends JPanel {
                     if (j - moves - 1 >= 0 && grid[j - moves - 1][i] == grid[j - moves][i]) {
                         grid[j - moves - 1][i] *= 2;
                         grid[j - moves][i] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
@@ -209,6 +213,7 @@ class Game extends JPanel {
                     if (j - moves - 1 >= 0 && grid[i][j - moves - 1] == grid[i][j - moves]) {
                         grid[i][j - moves - 1] *= 2;
                         grid[i][j - moves] = 0;
+                        score += grid[j - moves - 1][i];
                         moves++;
                     }
 
@@ -234,6 +239,8 @@ class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[j + moves + 1][i] == grid[j + moves][i]) {
                         grid[j + moves + 1][i] *= 2;
                         grid[j + moves][i] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
@@ -258,6 +265,8 @@ class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[i][j + moves + 1] == grid[i][j + moves]) {
                         grid[i][j + moves + 1] *= 2;
                         grid[i][j + moves] = 0;
+                        score += grid[j - moves - 1][i];
+                        moves++;
                     }
 
                     tot += moves;
