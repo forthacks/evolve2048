@@ -7,7 +7,8 @@ public class Evolution {
     private static final int GEN_NUM = 10;
     private static final double KILL_RATE = 0.5;
 
-    Player[] players = new Player[4];
+    Player[] players = new Player[PLAYER_NUM];
+    int[] scores = new int[PLAYER_NUM];
     public Evolution() {
 
         for (int i = 0; i < PLAYER_NUM; i++) {
@@ -15,8 +16,9 @@ public class Evolution {
         }
         for (int i = 0; i < GEN_NUM; i++) {
             for (int j = 0; j < PLAYER_NUM; j++) {
+                int score = 0;
                 for (int k = 0; k < NUM_TRIAL; i++) {
-//                    run();
+                    run(players[j]);
                 }
             }
         }

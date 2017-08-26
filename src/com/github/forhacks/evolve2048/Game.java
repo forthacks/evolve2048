@@ -11,11 +11,11 @@ import java.util.Random;
 class Game extends JPanel {
 
     // grid[row][column]
-    private int[][] grid;
+    public int[][] grid;
 
     private Random random = new Random();
 
-    private boolean game;
+    public boolean game;
 
     public int score = 0;
 
