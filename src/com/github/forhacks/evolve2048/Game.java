@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game extends JPanel {
+class Game extends JPanel {
 
     // grid[row][column]
-    int[][] grid;
+    private int[][] grid;
 
-    Random random = new Random();
+    private Random random = new Random();
 
-    boolean game;
+    private boolean game;
 
     public Game(boolean allowKeypresses) {
 
@@ -66,7 +66,7 @@ public class Game extends JPanel {
 
     }
 
-    boolean canMove() {
+    private boolean canMove() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if ((i < 3 && grid[i][j] == grid[i+1][j]) || ((j < 3) && grid[i][j] == grid[i][j+1])) {
@@ -115,7 +115,7 @@ public class Game extends JPanel {
         }
     }
 
-    public Color getBackground(int value) {
+    private Color getBackground(int value) {
         switch (value) {
             case 2:    return new Color(0xeee4da);
             case 4:    return new Color(0xede0c8);
@@ -132,7 +132,7 @@ public class Game extends JPanel {
         return new Color(0xcdc1b4);
     }
 
-    public void addTile() {
+    private void addTile() {
 
         List<int[]> available = new ArrayList<>();
 
