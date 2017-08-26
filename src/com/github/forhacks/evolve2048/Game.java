@@ -32,11 +32,7 @@ class Game extends JPanel {
                 public void keyPressed(KeyEvent e) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_ESCAPE:
-                            grid = new int[4][4];
-                            addTile();
-                            addTile();
-                            game = true;
-                            repaint();
+                            initGame();
                             break;
                         case KeyEvent.VK_UP:
                             move(0);
@@ -59,12 +55,20 @@ class Game extends JPanel {
             });
         }
 
+        initGame();
+
+    }
+
+    public void initGame() {
+
         grid = new int[4][4];
 
         addTile();
         addTile();
 
         game = true;
+
+        repaint();
 
     }
 
