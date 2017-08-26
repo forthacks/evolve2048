@@ -66,6 +66,7 @@ class Game extends JPanel {
         addTile();
         addTile();
 
+        score = 0;
         game = true;
 
         repaint();
@@ -75,7 +76,7 @@ class Game extends JPanel {
     private boolean canMove() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if ((i < 3 && grid[i][j] == grid[i+1][j]) || ((j < 3) && grid[i][j] == grid[i][j+1])) {
+                if ((i < 3 && grid[i][j] == grid[i+1][j]) || (j < 3 && grid[i][j] == grid[i][j+1])) {
                     return true;
                 }
                 if (grid[i][j] == 0) {
@@ -84,6 +85,45 @@ class Game extends JPanel {
             }
         }
         return false;
+    }
+
+    public boolean canMove(int direction) {
+
+        if (direction == 0) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 4; j++) {
+                    if ((grid[i][j] == 0 && grid[i+1][j] != 0) || (grid[i][j] == grid[i+1][j])) {
+                        return true;
+                    }
+                }
+            }
+        } else if (direction == 1) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if ((grid[i][j] == 0 && grid[i][j+1] != 0) || (grid[i][j] == grid[i][j+1])) {
+                        return true;
+                    }
+                }
+            }
+        } else if (direction == 2) {
+            for (int i = 3; i >= 1; i++) {
+                for (int j = 0; j < 4; j++) {
+                    if ((grid[i][j] == 0 && grid[i-1][j] != 0) || (grid[i][j] == grid[i-1][j])) {
+                        return true;
+                    }
+                }
+            }
+        } else if (direction == 3) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 3; j >= 1; j++) {
+                    if ((grid[i][j] == 0 && grid[i][j-1] != 0) || (grid[i][j] == grid[i][j-1])) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
     }
 
     @Override
@@ -287,7 +327,7 @@ class Game extends JPanel {
         if (!canMove()) {
             game = false;
         }
-
+        repaint();
     }
 
 }

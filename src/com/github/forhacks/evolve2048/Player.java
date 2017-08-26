@@ -12,8 +12,8 @@ class Player implements Cloneable {
     private static final int MIN_INIT_LAYER=2;
     private static final int MAX_INIT_NODES = 10;
     private static final int MIN_INIT_NODES = 4;
-    private static final double REMOVE_PROB = 0.05;
-    private static final double ADD_PROB = 0.05;
+    private static final double REMOVE_PROB = 0.00005;
+    private static final double ADD_PROB = 0.005;
     private static final double LAYER_ADD_PROB = 0.001;
 
     private Player(ArrayList<Layer> l) {
@@ -52,7 +52,6 @@ class Player implements Cloneable {
     }
 
     int run(int[][] grid) {
-
         Layer start = new Layer(new ArrayList<>());
 
         for (int[] arr : grid) {
@@ -67,9 +66,9 @@ class Player implements Cloneable {
         for (int i = 1; i < layers.size(); i++) {
             layers.get(i).reset();
             if (i % 2 == 0) {
-                layers.get(i).max(layers.get(i - 1));
+                layers.get(i - 1).max(layers.get(i));
             } else {
-                layers.get(i).and(layers.get(i - 1));
+                layers.get(i - 1).and(layers.get(i));
             }
         }
 
@@ -85,8 +84,9 @@ class Player implements Cloneable {
 
         Arrays.sort(indices, Comparator.comparingInt((Integer o) -> newMovement[o]));
         // Arrays.sort(indices, (Integer o1, Integer o2) -> newMovement[o1] - newMovement[o2]);
-
-        return indices[0];
+        int i = 0;
+        while (!Main.g.canMove(indices[i])) i++;
+        return indices[i];
     }
 
     static class Layer {
@@ -96,6 +96,7 @@ class Player implements Cloneable {
 
         Layer(ArrayList<Node> nodes) {
             this.nodes = nodes;
+            connections = new ArrayList<>();
         }
 
         Layer(ArrayList<Node> nodes, ArrayList<Connection> connections) {
@@ -116,21 +117,21 @@ class Player implements Cloneable {
 
         void and(Layer l) {
 
-            for (int i = 0; i < connections.size(); i++) {
+            for (int i = 0; i < l.connections.size(); i++) {
                 int n1 = l.connections.get(i).n1;
                 int n2 = l.connections.get(i).n2;
                 int toNode = l.connections.get(i).toNode;
-                nodes.set(toNode, Node.and(nodes.get(n1), nodes.get(n2)));
+                l.nodes.set(toNode, Node.and(nodes.get(n1), nodes.get(n2)));
             }
 
         }
         void max(Layer l) {
 
-            for (int i = 0; i < connections.size(); i++) {
+            for (int i = 0; i < l.connections.size(); i++) {
                 int n1 = l.connections.get(i).n1;
                 int n2 = l.connections.get(i).n2;
                 int toNode = l.connections.get(i).toNode;
-                nodes.set(toNode, Node.max(nodes.get(n1), nodes.get(n2)));
+                l.nodes.set(toNode, Node.max(nodes.get(n1), nodes.get(n2)));
             }
 
         }
