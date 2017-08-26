@@ -48,14 +48,14 @@ public class Evolution {
                 players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
                 players[j].mutate();
             }
-        }
-        Main.g.initGame();
-        for (;;) {
-            if (!Main.g.game.game) {
-                break;
+            Main.g.initGame();
+            for (;;) {
+                if (!Main.g.game.game) {
+                    break;
+                }
+                Main.g.move(players[0].run(Main.g.game.grid));
+                Thread.sleep(100);
             }
-            Main.g.move(players[0].run(Main.g.game.grid));
-            Thread.sleep(100);
         }
     }
 
