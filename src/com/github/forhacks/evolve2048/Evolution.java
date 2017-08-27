@@ -8,9 +8,9 @@ import java.util.concurrent.*;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 5;
-    private static final int NUM_TRIAL = 5;
-    private static final int GEN_NUM = 10;
+    private static final int PLAYER_NUM = 80;
+    private static final int NUM_TRIAL = 10;
+    private static final int GEN_NUM = 20;
     private static final double KILL_RATE = 0.5;
 
     Player[] players = new Player[PLAYER_NUM];
