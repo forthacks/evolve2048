@@ -7,6 +7,7 @@ public class Main extends JPanel {
 
     public static GameGUI game;
     public static GraphGUI graph;
+    public static Evolution evolution;
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
@@ -18,7 +19,8 @@ public class Main extends JPanel {
         frame.setResizable(false);
 
         game = new GameGUI(false);
-        graph = new GraphGUI(game);
+
+        graph = new GraphGUI();
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -31,7 +33,10 @@ public class Main extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        new Evolution();
+        evolution = new Evolution();
+        System.out.println(evolution == null);
+        evolution.start();
+
     }
 
 }

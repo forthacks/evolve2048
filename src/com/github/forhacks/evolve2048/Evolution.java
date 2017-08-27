@@ -4,17 +4,20 @@ import sun.jvm.hotspot.runtime.Threads;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 20;
-    private static final int NUM_TRIAL = 10;
+    private static final int PLAYER_NUM = 2;
+    private static final int NUM_TRIAL = 1;
     private static final int GEN_NUM = 20;
     private static final double KILL_RATE = 0.5;
 
     Player[] players = new Player[PLAYER_NUM];
+    int maxscore = 0;
+    List<Integer> scores = new ArrayList<>();
 
-    public Evolution() throws InterruptedException, ExecutionException {
+    public void start() throws InterruptedException, ExecutionException {
 
         Runnable runBest = () -> {
 
@@ -63,6 +66,12 @@ public class Evolution {
                     players[j] = tempPlayers[indices[j]];
                 }
 
+                int max = IntStream.of(scores).max().getAsInt();
+                if (max > maxscore)
+                    maxscore = max;
+                this.scores.add(max);
+                Main.graph.repaint();
+
                 for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
                     players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
                     players[j].mutate();
@@ -94,6 +103,7 @@ public class Evolution {
             t2.join();
 
         }
+
     }
 
     public boolean isRipple() {
