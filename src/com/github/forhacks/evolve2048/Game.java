@@ -67,7 +67,7 @@ class Game extends JPanel {
                 }
             }
         } else if (direction == 2) {
-            for (int i = 3; i >= 1; i++) {
+            for (int i = 3; i >= 1; i--) {
                 for (int j = 0; j < 4; j++) {
                     if ((grid[i][j] == 0 && grid[i-1][j] != 0) || (grid[i][j] == grid[i-1][j])) {
                         return true;
@@ -76,7 +76,7 @@ class Game extends JPanel {
             }
         } else if (direction == 3) {
             for (int i = 0; i < 4; i++) {
-                for (int j = 3; j >= 1; j++) {
+                for (int j = 3; j >= 1; j--) {
                     if ((grid[i][j] == 0 && grid[i][j-1] != 0) || (grid[i][j] == grid[i][j-1])) {
                         return true;
                     }
@@ -192,7 +192,7 @@ class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[j + moves + 1][i] == grid[j + moves][i]) {
                         grid[j + moves + 1][i] *= 2;
                         grid[j + moves][i] = 0;
-                        score += grid[j - moves - 1][i];
+                        score += grid[j + moves + 1][i];
                         moves++;
                     }
 
@@ -218,7 +218,7 @@ class Game extends JPanel {
                     if (j + moves + 1 <= 3 && grid[i][j + moves + 1] == grid[i][j + moves]) {
                         grid[i][j + moves + 1] *= 2;
                         grid[i][j + moves] = 0;
-                        score += grid[j - moves - 1][i];
+                        score += grid[j + moves + 1][i];
                         moves++;
                     }
 

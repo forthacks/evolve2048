@@ -11,12 +11,9 @@ class GameGUI extends JPanel {
 
     public GameGUI(boolean allowKeypresses) {
 
-        game = new Game();
+        setBackground(new Color(0xfaf8ef));
 
-        setPreferredSize(new Dimension(500, 520));
-        setFocusable(true);
-        setOpaque(true);
-        setBackground(new Color(0xbbada0));
+        game = new Game();
 
         if (allowKeypresses) {
             addKeyListener(new KeyAdapter() {
@@ -65,29 +62,40 @@ class GameGUI extends JPanel {
 
     @Override
     public void paint(Graphics g2) {
+
         super.paint(g2);
 
         Graphics2D g = (Graphics2D) g2;
 
-        int[][] grid = game.getGrid();
-
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
+
+        g.setColor(new Color(0xbbada0));
+        g.fillRect(0, 0, 500, 500);
+
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        FontMetrics fm = getFontMetrics(g.getFont());
+        String s = Integer.toString(game.score);
+
+        g.setColor(Color.DARK_GRAY);
+        g.drawString(s, 980 - fm.stringWidth(s), 50);
+
+        int[][] grid = game.getGrid();
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
 
                 g.setFont(new Font("Arial", Font.BOLD, grid[i][j] < 100 ? 36 : grid[j][i] < 1000 ? 32 : 24));
 
-                FontMetrics fm = getFontMetrics(g.getFont());
+                fm = getFontMetrics(g.getFont());
 
                 g.setColor(getBackground(grid[i][j]));
-                g.fillRoundRect(20 + 120 * j, 20 + 120 * i, 100, 100, 15, 15);
+                g.fillRoundRect(20 + 120 * j, 20 + 120 * i, 100, 100, 3, 3);
 
 
                 if (grid[i][j] != 0) {
-                    String s = Integer.toString(grid[i][j]);
-                    g.setColor(Color.BLACK);
+                    s = Integer.toString(grid[i][j]);
+                    g.setColor(Color.DARK_GRAY);
                     g.drawString(s, 70 + 120 * j - fm.stringWidth(s) / 2, 120 * (i + 1) - (100 + fm.getLineMetrics(s, g).getBaselineOffsets()[2]) / 2 - 2);
                 }
 
@@ -98,6 +106,7 @@ class GameGUI extends JPanel {
             g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
             g.fillRect(0, 0, 500, 500);
         }
+
     }
 
     private Color getBackground(int value) {

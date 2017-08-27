@@ -3,6 +3,8 @@ package com.github.forhacks.evolve2048;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 class Player implements Cloneable {
 
@@ -85,10 +87,21 @@ class Player implements Cloneable {
         Integer[] indices = new Integer[] {0, 1, 2, 3};
 
         Arrays.sort(indices, Comparator.comparingInt((Integer o) -> newMovement[o]));
-        // Arrays.sort(indices, (Integer o1, Integer o2) -> newMovement[o1] - newMovement[o2]);
         int i = 0;
         while (!game.canMove(indices[i])) i++;
         return indices[i];
+    }
+
+    static void shuffleArray(Integer[] ar) {
+
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = ar.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            int a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+
     }
 
     static class Layer {
