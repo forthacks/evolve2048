@@ -34,7 +34,6 @@ public class Main extends JPanel {
         frame.setVisible(true);
 
         evolution = new Evolution();
-        System.out.println(evolution == null);
         evolution.start();
 
     }
