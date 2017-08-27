@@ -7,13 +7,14 @@ import java.util.stream.IntStream;
 public class Evolution {
 
     private static final int PLAYER_NUM = 80;
-    private static final int NUM_TRIAL = 5;
-    private static final int GEN_NUM = 200;
+    private static final int NUM_TRIAL = 30;
+    private static final int GEN_NUM = 2000;
     private static final double KILL_RATE = 0.5;
 
-    Player[] players = new Player[PLAYER_NUM];
+    PlayerB[] players = new PlayerB[PLAYER_NUM];
     int maxscore = 0;
-    List<Integer> scores = new ArrayList<>();
+    List<Integer> bests = new ArrayList<>();
+    List<Integer> medians = new ArrayList<>();
 
     public void start() throws InterruptedException, ExecutionException {
 
@@ -21,11 +22,11 @@ public class Evolution {
 
             try {
 
-                Player player;
+                PlayerB player;
                 try {
-                    player = players[0].clone();
+                    player = new PlayerB(players[0]);
                 } catch (ConcurrentModificationException e) {
-                    player = players[0].clone();
+                    player = new PlayerB(players[0]);
                 }
 
                 Main.game.initGame();
@@ -35,7 +36,7 @@ public class Evolution {
                         break;
                     }
                     Main.game.move(player.run(Main.game.game));
-                    Thread.sleep(20);
+                    //Thread.sleep(20);
                 }
 
             } catch (Exception e) {
@@ -59,22 +60,34 @@ public class Evolution {
 
                 Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
 
-                Player[] tempPlayers = players.clone();
+                PlayerB[] tempPlayers = players.clone();
                 for (int j = 0; j < indices.length; j++) {
                     players[j] = tempPlayers[indices[j]];
                 }
 
-                int max = IntStream.of(scores).max().getAsInt();
-                if (max > maxscore)
-                    maxscore = max;
-                this.scores.add(max);
+                Arrays.sort(scores);
+
+                int median;
+
+                if (scores.length % 2 == 0)
+                    median = (int) ((double) scores[scores.length / 2] + (double) scores[scores.length / 2 - 1]) / 2;
+                else
+                    median = scores[scores.length / 2];
+
+                this.medians.add(median);
+                if (median > maxscore)
+                    maxscore = median;
+
+                int best = IntStream.of(scores).max().getAsInt();
+
+                this.bests.add(best);
+                if (best > maxscore)
+                    maxscore = best;
+
                 Main.graph.repaint();
-                for(Player p : players){
-                    System.out.println(p.layers.size()+" ho");
-                    System.out.println(p.layers.get(0).nodes.size());
-                }
+
                 for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
-                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
+                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = new PlayerB(players[j]);
                     players[j].mutate();
                 }
 
@@ -86,7 +99,7 @@ public class Evolution {
         };
 
         for (int i = 0; i < PLAYER_NUM; i++) {
-            players[i] = Player.generate();
+            players[i] = new PlayerB();
         }
 
         Thread t = new Thread(calc);

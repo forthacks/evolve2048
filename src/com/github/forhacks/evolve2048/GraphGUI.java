@@ -16,7 +16,7 @@ public class GraphGUI extends JPanel {
     @Override
     public void paint(Graphics g2) {
 
-        if (Main.evolution == null || Main.evolution.scores.size() == 0) {
+        if (Main.evolution == null || Main.evolution.bests.size() == 0) {
             return;
         }
 
@@ -47,16 +47,34 @@ public class GraphGUI extends JPanel {
         }
 
         g.setStroke(new BasicStroke(2));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.RED);
 
-        for (int i = 0; i < Main.evolution.scores.size(); i++) {
+        for (int i = 0; i < Main.evolution.bests.size(); i++) {
 
-            int score = Main.evolution.scores.get(i);
+            int score = Main.evolution.bests.get(i);
 
-            int x = 80 + (int) (((double) i / (Main.evolution.scores.size() - 1)) * 370.0);
+            int x = 80 + (int) (((double) i / (Main.evolution.bests.size() - 1)) * 370.0);
             int y = 450 - (int) (((double) score / Main.evolution.maxscore) * 300.0);
 
-            g.fillOval(x, y, 4, 4);
+            //g.fillOval(x, y, 4, 4);
+
+            if (i > 0) {
+                g.drawLine(prevx + 2, prevy + 2, x + 2,y + 2);
+            }
+
+            prevx = x;
+            prevy = y;
+
+        }
+        g.setColor(Color.BLUE);
+        for (int i = 0; i < Main.evolution.bests.size(); i++) {
+
+            int score = Main.evolution.medians.get(i);
+
+            int x = 80 + (int) (((double) i / (Main.evolution.medians.size() - 1)) * 370.0);
+            int y = 450 - (int) (((double) score / Main.evolution.maxscore) * 300.0);
+
+            //g.fillOval(x, y, 4, 4);
 
             if (i > 0) {
                 g.drawLine(prevx + 2, prevy + 2, x + 2,y + 2);
