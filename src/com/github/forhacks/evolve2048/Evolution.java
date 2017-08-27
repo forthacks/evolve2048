@@ -106,6 +106,7 @@ public class Evolution {
                             break;
                         }
                         int r = players[z].run(game);
+                        System.out.println(r);
                         game.move(r);
                     }
                     score += game.score;
