@@ -3,25 +3,34 @@ package com.github.forhacks.evolve2048;
 import javax.swing.*;
 import java.util.concurrent.ExecutionException;
 
-public class Main {
+public class Main extends JPanel {
 
-    public static GameGUI g;
+    public static GameGUI game;
+    public static GraphGUI graph;
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-        JFrame game = new JFrame();
-        game.setTitle("2048");
-        game.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        game.setUndecorated(true);
-        game.setSize(1000, 500);
-        game.setResizable(false);
+        JFrame frame = new JFrame();
+        frame.setTitle("2048");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setUndecorated(true);
+        frame.setSize(1000, 500);
+        frame.setResizable(false);
 
-        g = new GameGUI(false);
+        game = new GameGUI(false);
+        //graph = new GraphGUI(game);
 
-        game.add(g);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-        game.setLocationRelativeTo(null);
-        game.setVisible(true);
+        panel.add(game);
+        //panel.add(graph);
+
+        frame.add(panel);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
         new Evolution();
     }
 

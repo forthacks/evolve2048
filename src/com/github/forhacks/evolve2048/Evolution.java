@@ -2,15 +2,12 @@ package com.github.forhacks.evolve2048;
 
 import sun.jvm.hotspot.runtime.Threads;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 80;
+    private static final int PLAYER_NUM = 20;
     private static final int NUM_TRIAL = 10;
     private static final int GEN_NUM = 20;
     private static final double KILL_RATE = 0.5;
@@ -23,15 +20,20 @@ public class Evolution {
 
             try {
 
-                Player player = players[0].clone();
+                Player player;
+                try {
+                    player = players[0].clone();
+                } catch (ConcurrentModificationException e) {
+                    player = players[0].clone();
+                }
 
-                Main.g.initGame();
+                Main.game.initGame();
 
                 for (;;) {
-                    if (!Main.g.game.game) {
+                    if (!Main.game.game.game) {
                         break;
                     }
-                    Main.g.move(player.run(Main.g.game));
+                    Main.game.move(player.run(Main.game.game));
                     Thread.sleep(20);
                 }
 
@@ -95,7 +97,7 @@ public class Evolution {
     }
 
     public boolean isRipple() {
-        int[][] grid = Main.g.game.grid;
+        int[][] grid = Main.game.game.grid;
         if ((grid[0][2] == grid[1][1]) && (grid[0][2] == grid[2][0])) {
             return true;
         } else if ((grid[1][3] == grid[2][2]) && (grid[1][3] == grid[3][1])) {
