@@ -1,8 +1,10 @@
 package com.github.forhacks.evolve2048;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.*;
-import java.util.function.IntFunction;
 
 public class Evolution {
 
@@ -56,6 +58,31 @@ public class Evolution {
                 Thread.sleep(20);
             }
         }
+    }
+
+    public boolean isRipple() {
+        int[][] grid = Main.g.game.grid;
+        if ((grid[0][2] == grid[1][1]) && (grid[0][2] == grid[2][0])) {
+            return true;
+        } else if ((grid[1][3] == grid[2][2]) && (grid[1][3] == grid[3][1])) {
+            return true;
+        } else if (((grid[0][3] == grid[1][2]) && (grid[0][3] == grid[2][1])) ||
+                ((grid[0][3] == grid[1][2]) && (grid[0][3] == grid[3][0])) ||
+                ((grid[0][3] == grid[2][1]) && (grid[0][3] == grid[3][0])) ||
+                ((grid[1][2] == grid[2][1]) && (grid[1][2] == grid[3][0]))) {
+            return true;
+        }
+//        if ((grid[0][1] == grid[1][2]) && (grid[0][1] == grid[2][3])) {
+//            return true;
+//        } else if ((grid[1][0] == grid[2][1]) && (grid[1][0] == grid[3][2])) {
+//            return true;
+//        } else if (((grid[0][0] == grid[1][1]) && (grid[0][0] == grid[2][2])) ||
+//                ((grid[0][0] == grid[1][1]) && (grid[0][0] == grid[3][3])) ||
+//                ((grid[0][0] == grid[2][2]) && (grid[0][0] == grid[3][3])) ||
+//                ((grid[1][1] == grid[2][2]) && (grid[1][1] == grid[3][3]))) {
+//            return true;
+//        }
+        return false;
     }
 
     public int[] run() throws InterruptedException, ExecutionException {
