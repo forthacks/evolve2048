@@ -1,5 +1,7 @@
 package com.github.forhacks.evolve2048;
 
+import sun.jvm.hotspot.runtime.Threads;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -111,7 +113,7 @@ public class Evolution {
 
         List<Callable<Integer>> threads = new ArrayList<>();
 
-        ExecutorService executor = Executors.newFixedThreadPool(PLAYER_NUM);
+        ExecutorService executor = Executors.newWorkStealingPool();
 
         for (int i = 0; i < PLAYER_NUM; i++) {
 
