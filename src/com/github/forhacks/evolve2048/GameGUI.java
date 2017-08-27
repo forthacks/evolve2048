@@ -102,6 +102,7 @@ class GameGUI extends JPanel {
 
     private Color getBackground(int value) {
         switch (value) {
+            case 0:    return new Color(0xcdc1b4);
             case 2:    return new Color(0xeee4da);
             case 4:    return new Color(0xede0c8);
             case 8:    return new Color(0xf2b179);
@@ -113,8 +114,8 @@ class GameGUI extends JPanel {
             case 512:  return new Color(0xedc850);
             case 1024: return new Color(0xedc53f);
             case 2048: return new Color(0xedc22e);
+            default:   return new Color(0x3E86A0);
         }
-        return new Color(0xcdc1b4);
     }
 
 }
