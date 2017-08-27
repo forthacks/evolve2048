@@ -21,8 +21,6 @@ public class Evolution {
 
             try {
 
-                System.out.println("test1");
-
                 Player player = players[0].clone();
 
                 Main.g.initGame();
@@ -76,8 +74,6 @@ public class Evolution {
         for (int i = 0; i < PLAYER_NUM; i++) {
             players[i] = Player.generate();
         }
-
-        System.out.println("test");
 
         Thread t = new Thread(calc);
         t.start();
