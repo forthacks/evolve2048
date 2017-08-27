@@ -8,15 +8,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 class Player implements Cloneable {
 
-    private ArrayList<Layer> layers;
+    public ArrayList<Layer> layers;
 
     private static final int MAX_INIT_LAYER=4;
     private static final int MIN_INIT_LAYER=2;
     private static final int MAX_INIT_NODES = 10;
     private static final int MIN_INIT_NODES = 4;
+    private static final double MAX_CHANGE = 0.1;
     private static final double REMOVE_PROB = 0.00005;
     private static final double ADD_PROB = 0.05;
-    private static final double LAYER_ADD_PROB = 0.01;
+    private static final double LAYER_ADD_PROB = 0.001;
 
     private Player(ArrayList<Layer> l) {
         layers = l;
@@ -136,7 +137,8 @@ class Player implements Cloneable {
                 int n1 = l.connections.get(i).n1;
                 int n2 = l.connections.get(i).n2;
                 int toNode = l.connections.get(i).toNode;
-                l.nodes.set(toNode, Node.and(nodes.get(n1), nodes.get(n2)));
+                double[] addMove = l.connections.get(i).newMove;
+                l.nodes.set(toNode, Node.and(nodes.get(n1), nodes.get(n2), addMove));
             }
 
         }
@@ -154,6 +156,7 @@ class Player implements Cloneable {
         void mutate(int prevLayerSize) {
 
             for (int i = 0; i < connections.size(); i++){
+                connections.get(i).clone().mutate();
                 if (chance(REMOVE_PROB)) {
                     connections.remove(i);
                     i--;
@@ -168,7 +171,6 @@ class Player implements Cloneable {
                 }
                 connections.add(new Connection(n1, n2, (int) (Math.random() * nodes.size())));
             }
-
         }
 
         static Layer generate(int prevLayerSize) {
@@ -196,7 +198,7 @@ class Player implements Cloneable {
         Layer c() {
             ArrayList<Connection> newc = new ArrayList<>();
             for (Connection c : newc) {
-                newc.add(c);
+                newc.add(c.clone());
             }
             return new Layer(nodes, newc);
         }
@@ -208,13 +210,32 @@ class Player implements Cloneable {
     static class Connection {
 
         int n1, n2, toNode;
+        double[] newMove = new double[4];
 
         Connection(int n1, int n2, int toNode) {
             this.n1 = n1;
             this.n2 = n2;
             this.toNode = toNode;
+            for (int i = 0; i < 4; i++) {
+                newMove[i] = Math.random();
+            }
+        }
+        Connection(int n1, int n2, int toNode, double[] newMove) {
+            this.n1 = n1;
+            this.n2 = n2;
+            this.toNode = toNode;
+            this.newMove = newMove;
         }
 
+        void mutate() {
+            for (int i = 0; i < 4; i++) {
+                newMove[i] += Math.random()*2*MAX_CHANGE-MAX_CHANGE;
+            }
+        }
+
+        public Connection clone(){
+            return new Connection(n1, n2, toNode, newMove);
+        }
     }
 
     static class Node {
@@ -232,7 +253,7 @@ class Player implements Cloneable {
             this.movement = movement;
         }
 
-        static Node and(Node n1, Node n2) {
+        static Node and(Node n1, Node n2, double[] addMove) {
             double[] newMovement = new double[4];
 
             if (n1.value != n2.value) {
@@ -240,7 +261,7 @@ class Player implements Cloneable {
             }
 
             for (int i = 0; i < 4; i++) {
-                newMovement[i] = (n1.movement[i]+n2.movement[i])/2;
+                newMovement[i] = (n1.movement[i]+n2.movement[i])/2 + addMove[i];
             }
 
             return new Node(n1.value, newMovement);

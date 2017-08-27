@@ -31,12 +31,12 @@ public class Evolution {
             }
 
             Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
-            for (int z : indices)
-                System.out.println(z);
-            System.out.println();
-            for (int z : scores) {
-                System.out.println(z);
-            }
+//            for (int z : indices)
+//                System.out.println(z);
+//            System.out.println();
+//            for (int z : scores) {
+//                System.out.println(z);
+//            }
 
             Player[] tempPlayers = players.clone();
             for (int j = 0; j < indices.length; j++) {
