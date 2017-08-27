@@ -9,6 +9,7 @@ public class GraphGUI extends JPanel {
 
     public GraphGUI(GameGUI g) {
 
+        setPreferredSize(new Dimension(500, 500));
 
         this.g = g;
 

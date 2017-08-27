@@ -18,13 +18,13 @@ public class Main extends JPanel {
         frame.setResizable(false);
 
         game = new GameGUI(false);
-        //graph = new GraphGUI(game);
+        graph = new GraphGUI(game);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
         panel.add(game);
-        //panel.add(graph);
+        panel.add(graph);
 
         frame.add(panel);
 
