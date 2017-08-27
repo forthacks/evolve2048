@@ -17,46 +17,82 @@ public class Evolution {
 
     public Evolution() throws InterruptedException, ExecutionException {
 
+        Runnable runBest = () -> {
+
+            try {
+
+                System.out.println("test1");
+
+                Player player = players[0].clone();
+
+                Main.g.initGame();
+
+                for (;;) {
+                    if (!Main.g.game.game) {
+                        break;
+                    }
+                    Main.g.move(player.run(Main.g.game));
+                    Thread.sleep(20);
+                }
+
+            } catch (Exception e) {
+                Thread t = Thread.currentThread();
+                t.getUncaughtExceptionHandler().uncaughtException(t, e);
+            }
+
+        };
+
+        Runnable calc = () -> {
+
+            try {
+
+                int[] scores = run();
+
+                Integer[] indices = new Integer[PLAYER_NUM];
+
+                for (int j = 0; j < indices.length; j++) {
+                    indices[j] = j;
+                }
+
+                Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
+
+                Player[] tempPlayers = players.clone();
+                for (int j = 0; j < indices.length; j++) {
+                    players[j] = tempPlayers[indices[j]];
+                }
+
+                for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
+                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
+                    players[j].mutate();
+                }
+
+            } catch (Exception e) {
+                Thread t = Thread.currentThread();
+                t.getUncaughtExceptionHandler().uncaughtException(t, e);
+            }
+
+        };
+
         for (int i = 0; i < PLAYER_NUM; i++) {
             players[i] = Player.generate();
         }
+
+        System.out.println("test");
+
+        Thread t = new Thread(calc);
+        t.start();
+        t.join();
+
         for (int i = 0; i < GEN_NUM; i++) {
 
-            int[] scores = run();
+            Thread t1 = new Thread(runBest);
+            Thread t2 = new Thread(calc);
+            t1.start();
+            t2.start();
 
-            Integer[] indices = new Integer[PLAYER_NUM];
+            t1.join();
+            t2.join();
 
-            for (int j = 0; j < indices.length; j++) {
-                indices[j] = j;
-            }
-
-            Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
-//            for (int z : indices)
-//                System.out.println(z);
-//            System.out.println();
-//            for (int z : scores) {
-//                System.out.println(z);
-//            }
-
-            Player[] tempPlayers = players.clone();
-            for (int j = 0; j < indices.length; j++) {
-                players[j] = tempPlayers[indices[j]];
-            }
-
-            for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
-                players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
-                players[j].mutate();
-            }
-
-            Main.g.initGame();
-
-            for (;;) {
-                if (!Main.g.game.game) {
-                    break;
-                }
-                Main.g.move(players[0].run(Main.g.game));
-                Thread.sleep(20);
-            }
         }
     }
 
@@ -72,16 +108,6 @@ public class Evolution {
                 ((grid[1][2] == grid[2][1]) && (grid[1][2] == grid[3][0]))) {
             return true;
         }
-//        if ((grid[0][1] == grid[1][2]) && (grid[0][1] == grid[2][3])) {
-//            return true;
-//        } else if ((grid[1][0] == grid[2][1]) && (grid[1][0] == grid[3][2])) {
-//            return true;
-//        } else if (((grid[0][0] == grid[1][1]) && (grid[0][0] == grid[2][2])) ||
-//                ((grid[0][0] == grid[1][1]) && (grid[0][0] == grid[3][3])) ||
-//                ((grid[0][0] == grid[2][2]) && (grid[0][0] == grid[3][3])) ||
-//                ((grid[1][1] == grid[2][2]) && (grid[1][1] == grid[3][3]))) {
-//            return true;
-//        }
         return false;
     }
 
