@@ -51,8 +51,10 @@ class Player implements Cloneable {
         return p;
     }
 
-    int run(int[][] grid) {
+    int run(Game game) {
         Layer start = new Layer(new ArrayList<>());
+
+        int[][] grid = game.grid;
 
         for (int[] arr : grid) {
             for (int value : arr){
@@ -85,7 +87,7 @@ class Player implements Cloneable {
         Arrays.sort(indices, Comparator.comparingInt((Integer o) -> newMovement[o]));
         // Arrays.sort(indices, (Integer o1, Integer o2) -> newMovement[o1] - newMovement[o2]);
         int i = 0;
-        while (!Main.g.game.canMove(indices[i])) i++;
+        while (!game.canMove(indices[i])) i++;
         return indices[i];
     }
 

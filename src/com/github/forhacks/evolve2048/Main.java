@@ -1,12 +1,13 @@
 package com.github.forhacks.evolve2048;
 
 import javax.swing.*;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
 
     public static GameGUI g;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         JFrame game = new JFrame();
         game.setTitle("2048");
