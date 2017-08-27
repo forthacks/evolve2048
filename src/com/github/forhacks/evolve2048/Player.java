@@ -12,11 +12,12 @@ class Player implements Cloneable {
 
     private static final int MAX_INIT_LAYER=4;
     private static final int MIN_INIT_LAYER=2;
-    private static final int MAX_INIT_NODES = 10;
-    private static final int MIN_INIT_NODES = 4;
+    private static final int MAX_INIT_NODES = 5;
+    private static final int MIN_INIT_NODES = 3;
     private static final double MAX_CHANGE = 0.1;
     private static final double REMOVE_PROB = 0.00005;
-    private static final double ADD_PROB = 0.05;
+    private static final double CONNECTION_ADD_PROB = 0.05;
+    private static final double NODE_ADD_PROB = 0.05;
     private static final double LAYER_ADD_PROB = 0.001;
 
     private Player(ArrayList<Layer> l) {
@@ -51,6 +52,7 @@ class Player implements Cloneable {
         for(int i = 0; i < layerNum; i++) {
             p.layers.add(Layer.generate((i > 0) ? p.layers.get(i - 1).nodes.size() : 16));
         }
+        System.out.println(p.layers.size());
         return p;
     }
 
@@ -163,13 +165,23 @@ class Player implements Cloneable {
                 }
             }
 
-            if (chance(ADD_PROB)) {
+            if (chance(CONNECTION_ADD_PROB)) {
                 int n1 = (int) (Math.random() * prevLayerSize);
                 int n2 = (int) (Math.random() * prevLayerSize);
                 while (n2 == n1) {
                     n2 = (int) (Math.random() * prevLayerSize);
                 }
                 connections.add(new Connection(n1, n2, (int) (Math.random() * nodes.size())));
+            }
+
+            if (chance(NODE_ADD_PROB)) {
+                int n1 = (int) (Math.random() * prevLayerSize);
+                int n2 = (int) (Math.random() * prevLayerSize);
+                while (n2 == n1) {
+                    n2 = (int) (Math.random() * prevLayerSize);
+                }
+                nodes.add(new Node(0));
+                connections.add(new Connection(n1, n2, nodes.size()-1));
             }
         }
 

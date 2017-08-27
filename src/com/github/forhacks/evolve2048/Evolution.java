@@ -1,16 +1,14 @@
 package com.github.forhacks.evolve2048;
 
-import sun.jvm.hotspot.runtime.Threads;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 2;
-    private static final int NUM_TRIAL = 1;
-    private static final int GEN_NUM = 20;
+    private static final int PLAYER_NUM = 80;
+    private static final int NUM_TRIAL = 5;
+    private static final int GEN_NUM = 200;
     private static final double KILL_RATE = 0.5;
 
     Player[] players = new Player[PLAYER_NUM];
@@ -71,7 +69,10 @@ public class Evolution {
                     maxscore = max;
                 this.scores.add(max);
                 Main.graph.repaint();
-
+                for(Player p : players){
+                    System.out.println(p.layers.size()+" ho");
+                    System.out.println(p.layers.get(0).nodes.size());
+                }
                 for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
                     players[j + (int) (PLAYER_NUM * KILL_RATE)] = players[j].clone();
                     players[j].mutate();
