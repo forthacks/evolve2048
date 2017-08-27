@@ -27,7 +27,8 @@ public class Evolution {
                 score = 0;
                 for (int k = 0; k < NUM_TRIAL; k++) {
                     Main.g.initGame();
-                    score += run(players[j]);
+                    run(players[j]);
+                    score += fitness();
                 }
                 scores[j] = score/NUM_TRIAL;
 //                System.out.println(scores[j]);
@@ -58,8 +59,10 @@ public class Evolution {
             }
         }
     }
+    public int fitness(){
 
-    public int run(Player p) {
+    }
+    public void run(Player p) {
         for (;;) {
             if (!Main.g.game.game) {
                 break;
@@ -67,6 +70,5 @@ public class Evolution {
             Main.g.move(p.run(Main.g.game.grid));
         }
 //        System.out.println(Main.g.score);
-        return Main.g.game.score;
     }
 }
