@@ -10,14 +10,18 @@ public class InputNeuron extends Neuron {
 
     public InputNeuron() {
         super(new ArrayList<>(), null);
+        up = 0;
+        left = 0;
+        down = 0;
+        right = 0;
     }
-
-    @Override
-    public void mutate() {}
 
     public double[] getData() {
 
         return new double[] {value, up, left, down, right};
 
     }
+
+    public void mutate() {}
+
 }
