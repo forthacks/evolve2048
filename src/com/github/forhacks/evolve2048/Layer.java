@@ -25,8 +25,8 @@ public class Layer {
                     j--;
                     continue;
                 }
-                neurons.get(i).mutate();
             }
+            neurons.get(i).mutate(prev);
         }
 
         if (Math.random() < NODE_ADD_PROB) {
@@ -35,8 +35,15 @@ public class Layer {
 
         if (Math.random() < ADD_PROB) {
 
-            int n = (int) (Math.random() * prev.neurons.size());
-            this.neurons.get((int) (Math.random() * this.neurons.size())).parents.add(n);
+            int n1 = (int) (Math.random() * prev.neurons.size());
+            int n2 = (int) (Math.random() * prev.neurons.size());
+            while (n2 == n1) {
+                n2 = (int) (Math.random() * prev.neurons.size());
+            }
+
+            int n = (int) (Math.random() * this.neurons.size());
+            this.neurons.get(n).parents.add(n1);
+            this.neurons.get(n).parents.add(n2);
 
         }
 

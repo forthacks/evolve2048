@@ -12,7 +12,18 @@ public class MaxNeuron extends Neuron {
 
 
     @Override
-    public void mutate() {}
+    public void mutate(Layer prev) {
+
+        int n1 = (int) (Math.random() * prev.neurons.size());
+        int n2 = (int) (Math.random() * prev.neurons.size());
+        while (n2 == n1) {
+            n2 = (int) (Math.random() * prev.neurons.size());
+        }
+
+        parents.add(n1);
+        parents.add(n2);
+
+    }
 
     public double[] getData() {
 
@@ -23,20 +34,26 @@ public class MaxNeuron extends Neuron {
         double down = 0;
         double right = 0;
 
-        for (int i: parents) {
+        int i = parents.size()-2;
 
-            Neuron parent = prev.neurons.get(i);
+        Neuron parent1 = prev.neurons.get(parents.get(i));
+        Neuron parent2 = prev.neurons.get(parents.get(i+1));
 
-            double[] data = parent.getData();
+        double[] data1 = parent1.getData();
+        double[] data2 = parent2.getData();
 
-            if (data[0] > value) {
-                value = data[0];
-                up = data[1];
-                left = data[2];
-                down = data[3];
-                right = data[4];
-            }
-
+        if (data1[0] > data2[0]) {
+            value = data1[0];
+            up = data1[1];
+            left = data1[2];
+            down = data1[3];
+            right = data1[4];
+        } else {
+            value = data2[0];
+            up = data2[1];
+            left = data2[2];
+            down = data2[3];
+            right = data2[4];
         }
 
         return new double[] {value, up, left, down, right};

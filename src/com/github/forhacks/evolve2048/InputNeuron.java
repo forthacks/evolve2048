@@ -26,6 +26,6 @@ public class InputNeuron extends Neuron {
 
     }
 
-    public void mutate() {}
+    public void mutate(Layer prev) {}
 
 }

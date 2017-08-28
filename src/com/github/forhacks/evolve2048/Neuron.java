@@ -39,7 +39,7 @@ public abstract class Neuron {
 
     }
 
-    abstract public void mutate();
+    abstract public void mutate(Layer prev);
 
     abstract public double[] getData();
 

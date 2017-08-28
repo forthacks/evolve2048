@@ -11,13 +11,21 @@ public class AndNeuron extends Neuron {
     }
 
     @Override
-    public void mutate() {
+    public void mutate(Layer prev) {
 
         up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
         left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
         down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
         right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
 
+        int n1 = (int) (Math.random() * prev.neurons.size());
+        int n2 = (int) (Math.random() * prev.neurons.size());
+        while (n2 == n1) {
+            n2 = (int) (Math.random() * prev.neurons.size());
+        }
+
+        parents.add(n1);
+        parents.add(n2);
     }
 
     public double[] getData() {
@@ -29,27 +37,23 @@ public class AndNeuron extends Neuron {
         double totdown = 0;
         double totright = 0;
 
-        for (int i: parents) {
+        int i = parents.size()-2;
 
-            Neuron parent = prev.neurons.get(i);
+        Neuron parent1 = prev.neurons.get(parents.get(i));
+        Neuron parent2 = prev.neurons.get(parents.get(i+1));
 
-            double[] data = parent.getData();
-            totup += data[1];
-            totleft += data[2];
-            totdown += data[3];
-            totright += data[4];
+        double[] data1 = parent1.getData();
+        double[] data2 = parent2.getData();
 
-            if (value == -1 || value == data[0]) {
-                value = data[0];
-            } else {
-                value = 0;
-            }
-
+        if (data1[0] == data2[0]) {
+            value = data1[0];
+            up = (data1[1] + data2[1])/2;
+            left = (data1[2] + data2[2])/2;
+            down = (data1[3] + data2[3])/2;
+            right = (data1[4] + data2[4])/2;
         }
 
-        int size = parents.size();
-
-        return new double[] {value, totup/size, totleft/size, totdown/size, totright/size};
+        return new double[] {value, totup, totleft, totdown, totright};
 
     }
 
