@@ -45,6 +45,14 @@ public class Player {
 
         double[] move = new double[4];
 
+        for (int i = 0; i < 16; i++) {
+            Neuron n = layers.get(0).neurons.get(i);
+            if (n instanceof InputNeuron) {
+                InputNeuron n2 = (InputNeuron) n;
+                n2.setValue(game.grid[i/4][i%4]);
+            }
+        }
+
         for (int i = 0 ; i < layers.get(layers.size() - 1).neurons.size(); i++) {
 
             double[] data = layers.get(layers.size() - 1).neurons.get(i).getData();

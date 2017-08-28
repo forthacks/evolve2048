@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-class GameGUI extends JPanel {
+class GamePanel extends JPanel {
 
     Game game;
 
-    public GameGUI(boolean allowKeypresses) {
+    public GamePanel(boolean allowKeypresses) {
 
         setPreferredSize(new Dimension(500, 500));
 

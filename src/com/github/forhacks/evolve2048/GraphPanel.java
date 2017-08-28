@@ -3,9 +3,9 @@ package com.github.forhacks.evolve2048;
 import javax.swing.*;
 import java.awt.*;
 
-public class GraphGUI extends JPanel {
+public class GraphPanel extends JPanel {
 
-    public GraphGUI() {
+    public GraphPanel() {
 
         setPreferredSize(new Dimension(500, 500));
 

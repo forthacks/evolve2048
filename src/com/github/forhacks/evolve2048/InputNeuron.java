@@ -6,7 +6,7 @@ public class InputNeuron extends Neuron {
 
     private static final double MAX_CHANGE = 0.1;
 
-    double value;
+    private double value;
 
     public InputNeuron() {
         super(new ArrayList<>(), null);
@@ -14,6 +14,10 @@ public class InputNeuron extends Neuron {
         left = 0;
         down = 0;
         right = 0;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public double[] getData() {
