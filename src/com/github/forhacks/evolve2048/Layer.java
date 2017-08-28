@@ -31,7 +31,7 @@ public class Layer {
 
         for (Neuron n : original.neurons) {
             if (n instanceof AndNeuron)
-                neurons.add(new AndNeuron(new ArrayList<>(n.parents), prev));
+                neurons.add(new AndNeuron(new ArrayList<>(n.parents), prev, n.up, n.left, n.down, n.right));
             else if (n instanceof MaxNeuron)
                 neurons.add(new MaxNeuron(new ArrayList<>(n.parents), prev));
             else if (n instanceof InputNeuron)

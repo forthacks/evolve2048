@@ -8,7 +8,7 @@ public class Evolution {
 
     private static final int PLAYER_NUM = 50;
     private static final int NUM_TRIAL = 10;
-    private static final int GEN_NUM = 2000;
+    private static final int GEN_NUM = 20000;
     private static final double KILL_RATE = 0.5;
 
     Player[] players = new Player[PLAYER_NUM];

@@ -11,6 +11,14 @@ public class AndNeuron extends Neuron {
         super(parents, prev);
     }
 
+    public AndNeuron(List<Integer> parents, Layer prev, double up, double left, double down, double right) {
+        super(parents, prev);
+        this.up = up;
+        this.left = left;
+        this.down = down;
+        this.right = right;
+    }
+
     @Override
     public void mutate(Layer prev) {
 
@@ -52,10 +60,10 @@ public class AndNeuron extends Neuron {
 
         if (data1[0] == data2[0]) {
             value = data1[0];
-            up = (data1[1] + data2[1])/2;
-            left = (data1[2] + data2[2])/2;
-            down = (data1[3] + data2[3])/2;
-            right = (data1[4] + data2[4])/2;
+            up += (data1[1] + data2[1])/2;
+            left += (data1[2] + data2[2])/2;
+            down += (data1[3] + data2[3])/2;
+            right += (data1[4] + data2[4])/2;
         }
 
         return new double[] {value, totup, totleft, totdown, totright};
