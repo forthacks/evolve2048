@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 5;
-    private static final int NUM_TRIAL = 2;
+    private static final int PLAYER_NUM = 80;
+    private static final int NUM_TRIAL = 30;
     private static final int GEN_NUM = 2000;
     private static final double KILL_RATE = 0.5;
 
@@ -109,7 +109,6 @@ public class Evolution {
         t.join();
 
         for (int i = 0; i < GEN_NUM; i++) {
-
             Thread t1 = new Thread(runBest);
             Thread t2 = new Thread(calc);
             t1.start();
