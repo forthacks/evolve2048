@@ -9,6 +9,7 @@ public class GraphGUI extends JPanel {
 
         setPreferredSize(new Dimension(500, 500));
 
+        setOpaque(true);
         setBackground(new Color(0xfaf8ef));
 
     }

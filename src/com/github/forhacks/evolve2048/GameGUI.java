@@ -13,6 +13,7 @@ class GameGUI extends JPanel {
 
         setPreferredSize(new Dimension(500, 500));
 
+        setOpaque(true);
         setBackground(new Color(0xbbada0));
 
         game = new Game();
