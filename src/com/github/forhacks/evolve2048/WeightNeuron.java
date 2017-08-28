@@ -2,15 +2,15 @@ package com.github.forhacks.evolve2048;
 
 import java.util.List;
 
-public class WeightNeuron extends Neuron{
+public class WeightNeuron extends Neuron {
 
-    static final double MAX_INIT_WEIGHT = 2;
+    private static final double MAX_INIT_WEIGHT = 2;
 
     public double weight;
 
     public WeightNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
-        weight = Math.random()* MAX_INIT_WEIGHT;
+        weight = Math.random() * MAX_INIT_WEIGHT;
     }
 
     @Override

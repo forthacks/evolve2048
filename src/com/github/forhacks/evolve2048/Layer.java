@@ -19,32 +19,11 @@ public class Layer {
     public void mutate(Layer prev) {
 
         for (int i = 0; i < neurons.size(); i++) {
-            for (int j = 0; j < neurons.get(i).parents.size(); j++) {
-                if (Math.random() < REMOVE_PROB) {
-                    neurons.get(i).parents.remove(i);
-                    j--;
-                    continue;
-                }
-            }
             neurons.get(i).mutate(prev);
         }
 
         if (Math.random() < NODE_ADD_PROB) {
             addNeuron(prev);
-        }
-
-        if (Math.random() < ADD_PROB) {
-
-            int n1 = (int) (Math.random() * prev.neurons.size());
-            int n2 = (int) (Math.random() * prev.neurons.size());
-            while (n2 == n1) {
-                n2 = (int) (Math.random() * prev.neurons.size());
-            }
-
-            int n = (int) (Math.random() * this.neurons.size());
-            this.neurons.get(n).parents.add(n1);
-            this.neurons.get(n).parents.add(n2);
-
         }
 
     }
@@ -60,6 +39,8 @@ public class Layer {
                 neurons.add(new MaxNeuron(new ArrayList<>(n.parents), prev));
             else if (n instanceof InputNeuron)
                 neurons.add(new InputNeuron());
+            else if (n instanceof WeightNeuron)
+                neurons.add(new WeightNeuron(new ArrayList<>(n.parents), prev));
         }
 
     }
@@ -98,29 +79,24 @@ public class Layer {
 
         int type = (int) (Math.random() * 3);
 
-        switch (type){
-            case 0:
-                this.neurons.add(
-                    new AndNeuron(
+        if (type == 0)
+            this.neurons.add(
+                new AndNeuron(
+                        new ArrayList<>(Arrays.asList(n1, n2)), prev
+                )
+            );
+        else if (type == 1)
+            this.neurons.add(
+                    new MaxNeuron(
                             new ArrayList<>(Arrays.asList(n1, n2)), prev
                     )
-                );
-                break;
-            case 1:
-                this.neurons.add(
-                        new MaxNeuron(
-                                new ArrayList<>(Arrays.asList(n1, n2)), prev
-                        )
-                );
-                break;
-            case 2:
-                this.neurons.add(
-                        new WeightNeuron(
-                                new ArrayList<>(Arrays.asList(n1)), prev
-                        )
-                );
-                break;
-        }
+            );
+        else if (type == 2)
+            this.neurons.add(
+                    new WeightNeuron(
+                            new ArrayList<>(Arrays.asList(n1)), prev
+                    )
+            );
     }
 
 }

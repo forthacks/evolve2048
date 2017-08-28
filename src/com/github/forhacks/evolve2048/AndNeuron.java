@@ -37,10 +37,10 @@ public class AndNeuron extends Neuron {
         double totdown = 0;
         double totright = 0;
 
-        int i = parents.size()-2;
+        int i = parents.size();
 
-        Neuron parent1 = prev.neurons.get(parents.get(i));
-        Neuron parent2 = prev.neurons.get(parents.get(i+1));
+        Neuron parent1 = prev.neurons.get(parents.get(i - 2));
+        Neuron parent2 = prev.neurons.get(parents.get(i - 1));
 
         double[] data1 = parent1.getData();
         double[] data2 = parent2.getData();
