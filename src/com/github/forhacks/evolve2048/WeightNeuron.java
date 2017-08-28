@@ -4,13 +4,13 @@ import java.util.List;
 
 public class WeightNeuron extends Neuron{
 
-    static final double MAX_INIT_WIEGHT = 2;
+    static final double MAX_INIT_WEIGHT = 2;
 
-    public double wieght;
+    public double weight;
 
     public WeightNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
-        wieght = Math.random()*MAX_INIT_WIEGHT;
+        weight = Math.random()* MAX_INIT_WEIGHT;
     }
 
     @Override
@@ -18,14 +18,14 @@ public class WeightNeuron extends Neuron{
         int n = (int) (Math.random() * prev.neurons.size());
         parents.add(n);
 
-        wieght += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        weight += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
     }
 
     @Override
     public double[] getData() {
         int parent = parents.get(parents.size()-1);
         double[] parentData = prev.neurons.get(parent).getData();
-        double value = parentData[0]*wieght;
+        double value = parentData[0]* weight;
         double[] data = new double[]{value, parentData[1], parentData[2], parentData[3], parentData[4]};
         return data;
     }
