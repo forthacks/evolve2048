@@ -13,10 +13,10 @@ public class AndNeuron extends Neuron {
     @Override
     public void mutate() {
 
-        up += Math.random() * MAX_CHANGE;
-        left += Math.random() * MAX_CHANGE;
-        down += Math.random() * MAX_CHANGE;
-        right += Math.random() * MAX_CHANGE;
+        up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
 
     }
 
