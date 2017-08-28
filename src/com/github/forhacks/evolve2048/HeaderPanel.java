@@ -10,7 +10,7 @@ public class HeaderPanel extends JPanel {
         setPreferredSize(new Dimension(1000, 50));
 
         setOpaque(true);
-        setBackground(new Color(0xfaf8ef));
+        setBackground(new Color(0xffffff));
 
     }
 
