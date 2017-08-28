@@ -10,9 +10,13 @@ public class MaxNeuron extends Neuron {
         super(parents, prev);
     }
 
-
     @Override
     public void mutate(Layer prev) {
+
+        up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
 
         int n1 = (int) (Math.random() * prev.neurons.size());
         int n2 = (int) (Math.random() * prev.neurons.size());

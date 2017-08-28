@@ -5,8 +5,6 @@ import java.util.List;
 
 public abstract class Neuron {
 
-    public static final double MAX_CHANGE = 0.1;
-
     double up;
     double left;
     double down;

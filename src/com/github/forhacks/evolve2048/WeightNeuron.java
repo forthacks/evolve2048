@@ -5,6 +5,7 @@ import java.util.List;
 public class WeightNeuron extends Neuron {
 
     private static final double MAX_INIT_WEIGHT = 2;
+    private static final double MAX_CHANGE = 0.1;
 
     public double weight;
 
@@ -15,18 +16,23 @@ public class WeightNeuron extends Neuron {
 
     @Override
     public void mutate(Layer prev) {
+
         int n = (int) (Math.random() * prev.neurons.size());
         parents.add(n);
 
         weight += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+
     }
 
     @Override
     public double[] getData() {
+
         int parent = parents.get(parents.size()-1);
-        double[] parentData = prev.neurons.get(parent).getData();
-        double value = parentData[0]* weight;
-        double[] data = new double[]{value, parentData[1], parentData[2], parentData[3], parentData[4]};
-        return data;
+        double[] data = prev.neurons.get(parent).getData();
+
+        double value = data[0] * weight;
+        double[] result = new double[] {value, data[1], data[2], data[3], data[4]};
+        return result;
+
     }
 }

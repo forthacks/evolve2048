@@ -7,12 +7,9 @@ import java.util.List;
 
 public class Layer {
 
-    private static final double REMOVE_PROB = 0.000001;
-    private static final double ADD_PROB = 0.001;
     private static final int MAX_INIT_NODES=10;
     private static final int MIN_INIT_NODES=4;
     private static final double NODE_ADD_PROB = 0.01;
-    private static final double NODE_REMOVE_PROB = 0.00001;
 
     List<Neuron> neurons;
 
