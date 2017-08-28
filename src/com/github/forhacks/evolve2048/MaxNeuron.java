@@ -4,6 +4,8 @@ import java.util.List;
 
 public class MaxNeuron extends Neuron {
 
+    private static final double MAX_CHANGE = 0.1;
+
     public MaxNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
     }
@@ -36,5 +38,7 @@ public class MaxNeuron extends Neuron {
         return new double[] {value, up, left, down, right};
 
     }
+
+    public void mutate() {}
 
 }

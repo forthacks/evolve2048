@@ -4,6 +4,8 @@ import java.util.List;
 
 public class AndNeuron extends Neuron {
 
+    private static final double MAX_CHANGE = 0.1;
+
     public AndNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
     }
@@ -38,6 +40,15 @@ public class AndNeuron extends Neuron {
         int size = parents.size();
 
         return new double[] {value, totup/size, totleft/size, totdown/size, totright/size};
+
+    }
+
+    public void mutate() {
+
+        up += Math.random() * MAX_CHANGE;
+        left += Math.random() * MAX_CHANGE;
+        down += Math.random() * MAX_CHANGE;
+        right += Math.random() * MAX_CHANGE;
 
     }
 
