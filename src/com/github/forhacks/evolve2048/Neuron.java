@@ -1,8 +1,11 @@
 package com.github.forhacks.evolve2048;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Neuron {
+
+    public static final double MAX_CHANGE = 0.1;
 
     double up;
     double left;
@@ -25,7 +28,19 @@ public abstract class Neuron {
 
     }
 
+    public Neuron(Neuron original) {
+
+        this.up = original.up;
+        this.left = original.left;
+        this.down = original.down;
+        this.right = original.right;
+
+        this.parents = new ArrayList<>();
+
+    }
+
+    abstract public void mutate();
+
     abstract public double[] getData();
-    abstract void mutate();
 
 }

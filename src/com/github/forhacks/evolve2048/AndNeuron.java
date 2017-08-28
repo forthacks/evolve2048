@@ -10,6 +10,16 @@ public class AndNeuron extends Neuron {
         super(parents, prev);
     }
 
+    @Override
+    public void mutate() {
+
+        up += Math.random() * MAX_CHANGE;
+        left += Math.random() * MAX_CHANGE;
+        down += Math.random() * MAX_CHANGE;
+        right += Math.random() * MAX_CHANGE;
+
+    }
+
     public double[] getData() {
 
         double value = -1;
@@ -40,15 +50,6 @@ public class AndNeuron extends Neuron {
         int size = parents.size();
 
         return new double[] {value, totup/size, totleft/size, totdown/size, totright/size};
-
-    }
-
-    public void mutate() {
-
-        up += Math.random() * MAX_CHANGE;
-        left += Math.random() * MAX_CHANGE;
-        down += Math.random() * MAX_CHANGE;
-        right += Math.random() * MAX_CHANGE;
 
     }
 

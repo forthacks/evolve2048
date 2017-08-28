@@ -12,19 +12,12 @@ public class InputNeuron extends Neuron {
         super(new ArrayList<>(), null);
     }
 
+    @Override
+    public void mutate() {}
+
     public double[] getData() {
 
         return new double[] {value, up, left, down, right};
 
     }
-
-    public void mutate() {
-
-        up += Math.random() * MAX_CHANGE;
-        left += Math.random() * MAX_CHANGE;
-        down += Math.random() * MAX_CHANGE;
-        right += Math.random() * MAX_CHANGE;
-
-    }
-
 }

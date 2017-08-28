@@ -10,6 +10,10 @@ public class MaxNeuron extends Neuron {
         super(parents, prev);
     }
 
+
+    @Override
+    public void mutate() {}
+
     public double[] getData() {
 
         double value = -1;
@@ -38,7 +42,4 @@ public class MaxNeuron extends Neuron {
         return new double[] {value, up, left, down, right};
 
     }
-
-    public void mutate() {}
-
 }
