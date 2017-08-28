@@ -2,13 +2,13 @@ package com.github.forhacks.evolve2048;
 
 import java.util.List;
 
-public class WieghtNeuron extends Neuron{
+public class WeightNeuron extends Neuron{
 
     static final double MAX_INIT_WIEGHT = 2;
 
     public double wieght;
 
-    public WieghtNeuron(List<Integer> parents, Layer prev) {
+    public WeightNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
         wieght = Math.random()*MAX_INIT_WIEGHT;
     }

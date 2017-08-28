@@ -115,7 +115,7 @@ public class Layer {
                 break;
             case 2:
                 this.neurons.add(
-                        new WieghtNeuron(
+                        new WeightNeuron(
                                 new ArrayList<>(Arrays.asList(n1)), prev
                         )
                 );
