@@ -28,17 +28,6 @@ public abstract class Neuron {
 
     }
 
-    public Neuron(Neuron original) {
-
-        this.up = original.up;
-        this.left = original.left;
-        this.down = original.down;
-        this.right = original.right;
-
-        this.parents = new ArrayList<>();
-
-    }
-
     public void mutate() {
 
         up += Math.random() * MAX_CHANGE;
