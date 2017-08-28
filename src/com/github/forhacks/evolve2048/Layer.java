@@ -96,15 +96,31 @@ public class Layer {
             n2 = (int) (Math.random() * prev.neurons.size());
         }
 
-        int type = (int) (Math.random() * 2);
+        int type = (int) (Math.random() * 3);
 
-        this.neurons.add(
-                type == 0 ? new AndNeuron(
-                        new ArrayList<>(Arrays.asList(n1, n2)), prev
-                ) : new MaxNeuron(
-                        new ArrayList<>(Arrays.asList(n1, n2)), prev
-                )
-        );
+        switch (type){
+            case 0:
+                this.neurons.add(
+                    new AndNeuron(
+                            new ArrayList<>(Arrays.asList(n1, n2)), prev
+                    )
+                );
+                break;
+            case 1:
+                this.neurons.add(
+                        new MaxNeuron(
+                                new ArrayList<>(Arrays.asList(n1, n2)), prev
+                        )
+                );
+                break;
+            case 2:
+                this.neurons.add(
+                        new WieghtNeuron(
+                                new ArrayList<>(Arrays.asList(n1)), prev
+                        )
+                );
+                break;
+        }
     }
 
 }
