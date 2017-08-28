@@ -11,7 +11,7 @@ public class Evolution {
     private static final int GEN_NUM = 2000;
     private static final double KILL_RATE = 0.5;
 
-    PlayerB[] players = new PlayerB[PLAYER_NUM];
+    Player[] players = new Player[PLAYER_NUM];
     int maxscore = 0;
     List<Integer> bests = new ArrayList<>();
     List<Integer> medians = new ArrayList<>();
@@ -22,11 +22,11 @@ public class Evolution {
 
             try {
 
-                PlayerB player;
+                Player player;
                 try {
-                    player = new PlayerB(players[0]);
+                    player = new Player(players[0]);
                 } catch (ConcurrentModificationException e) {
-                    player = new PlayerB(players[0]);
+                    player = new Player(players[0]);
                 }
 
                 Main.game.initGame();
@@ -60,7 +60,7 @@ public class Evolution {
 
                 Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
 
-                PlayerB[] tempPlayers = players.clone();
+                Player[] tempPlayers = players.clone();
                 for (int j = 0; j < indices.length; j++) {
                     players[j] = tempPlayers[indices[j]];
                 }
@@ -87,7 +87,7 @@ public class Evolution {
                 Main.graph.repaint();
 
                 for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
-                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = new PlayerB(players[j]);
+                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = new Player(players[j]);
                     players[j].mutate();
                 }
 
@@ -99,7 +99,7 @@ public class Evolution {
         };
 
         for (int i = 0; i < PLAYER_NUM; i++) {
-            players[i] = new PlayerB();
+            players[i] = new Player();
         }
 
         Thread t = new Thread(calc);
