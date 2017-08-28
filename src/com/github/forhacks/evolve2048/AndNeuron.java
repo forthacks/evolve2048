@@ -5,6 +5,7 @@ import java.util.List;
 public class AndNeuron extends Neuron {
 
     private static final double MAX_CHANGE = 0.1;
+    private static final double ADD_PROB = 0.05;
 
     public AndNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
@@ -18,14 +19,18 @@ public class AndNeuron extends Neuron {
         down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
         right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
 
-        int n1 = (int) (Math.random() * prev.neurons.size());
-        int n2 = (int) (Math.random() * prev.neurons.size());
-        while (n2 == n1) {
-            n2 = (int) (Math.random() * prev.neurons.size());
-        }
+        if (Math.random() < ADD_PROB) {
 
-        parents.add(n1);
-        parents.add(n2);
+            int n1 = (int) (Math.random() * prev.neurons.size());
+            int n2 = (int) (Math.random() * prev.neurons.size());
+            while (n2 == n1) {
+                n2 = (int) (Math.random() * prev.neurons.size());
+            }
+
+            parents.add(n1);
+            parents.add(n2);
+
+        }
     }
 
     public double[] getData() {

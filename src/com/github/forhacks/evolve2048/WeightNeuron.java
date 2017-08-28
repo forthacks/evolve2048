@@ -6,6 +6,7 @@ public class WeightNeuron extends Neuron {
 
     private static final double MAX_INIT_WEIGHT = 2;
     private static final double MAX_CHANGE = 0.1;
+    private static final double ADD_PROB = 0.05;
 
     public double weight;
 
@@ -17,10 +18,14 @@ public class WeightNeuron extends Neuron {
     @Override
     public void mutate(Layer prev) {
 
-        int n = (int) (Math.random() * prev.neurons.size());
-        parents.add(n);
-
         weight += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+
+        if (Math.random() < ADD_PROB) {
+
+            int n = (int) (Math.random() * prev.neurons.size());
+            parents.add(n);
+
+        }
 
     }
 
