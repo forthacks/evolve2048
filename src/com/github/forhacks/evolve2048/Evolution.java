@@ -32,11 +32,13 @@ public class Evolution {
                 Main.game.initGame();
 
                 for (;;) {
+
                     if (!Main.game.game.game) {
                         break;
                     }
+
                     Main.game.move(player.run(Main.game.game));
-                    //Thread.sleep(20);
+
                 }
 
             } catch (Exception e) {

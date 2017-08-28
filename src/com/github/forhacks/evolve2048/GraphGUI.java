@@ -29,6 +29,9 @@ public class GraphGUI extends JPanel {
         int prevx = 0;
         int prevy = 0;
 
+        g.setColor(new Color(0xfaf8ef));
+        g.fillRect(0, 0, 500, 500);
+
         g.setColor(Color.GRAY);
 
         g.setFont(new Font("Arial", Font.PLAIN, 12));
