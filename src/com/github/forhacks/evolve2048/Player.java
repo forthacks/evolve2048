@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Player {
 
-    private static final int MAX_INIT_LAYER=4;
-    private static final int MIN_INIT_LAYER=2;
-    private static final double LAYER_ADD_PROB = 0.001;
+    private static final int MAX_INIT_LAYER = 4;
+    private static final int MIN_INIT_LAYER = 2;
+    private static final double LAYER_ADD_PROB = 0.2;
 
     List<Layer> layers;
 

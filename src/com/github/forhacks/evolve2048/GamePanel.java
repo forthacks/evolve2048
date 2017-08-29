@@ -13,9 +13,6 @@ class GamePanel extends JPanel {
 
         setPreferredSize(new Dimension(500, 500));
 
-        setOpaque(true);
-        setBackground(new Color(0xbbada0));
-
         game = new Game();
 
         if (allowKeypresses) {
@@ -73,12 +70,15 @@ class GamePanel extends JPanel {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
 
+        g.setColor(new Color(0xbbada0));
+        g.fillRect(0, 0, 500, 500);
+
         int[][] grid = game.getGrid();
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
 
-                g.setFont(new Font("Arial", Font.BOLD, grid[i][j] < 100 ? 36 : grid[j][i] < 1000 ? 32 : 24));
+                g.setFont(g.getFont().deriveFont(grid[i][j] < 100 ? 36f : grid[j][i] < 1000 ? 32f : 24f).deriveFont(Font.BOLD));
 
                 FontMetrics fm = getFontMetrics(g.getFont());
 

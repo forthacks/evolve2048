@@ -6,119 +6,120 @@ import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 50;
-    private static final int NUM_TRIAL = 10;
+    private static final int PLAYER_NUM = 6;
+    private static final int NUM_TRIAL = 2;
     private static final int GEN_NUM = 20000;
     private static final double KILL_RATE = 0.5;
+
+    List<Player> bestplayers = new ArrayList<>();
 
     Player[] players = new Player[PLAYER_NUM];
     int maxscore = 0;
     List<Integer> bests = new ArrayList<>();
     List<Integer> medians = new ArrayList<>();
 
-    public void start() throws InterruptedException, ExecutionException {
+    boolean running = false;
 
-        Runnable runBest = () -> {
-
-            try {
-
-                Player player;
-                try {
-                    player = new Player(players[0]);
-                } catch (ConcurrentModificationException e) {
-                    player = new Player(players[0]);
-                }
-
-                Main.game.initGame();
-
-                for (;;) {
-
-                    if (!Main.game.game.game) {
-                        break;
-                    }
-
-                    Main.game.move(player.run(Main.game.game));
-
-                }
-
-            } catch (Exception e) {
-                Thread t = Thread.currentThread();
-                t.getUncaughtExceptionHandler().uncaughtException(t, e);
-            }
-
-        };
-
-        Runnable calc = () -> {
-
-            try {
-
-                int[] scores = run();
-
-                Integer[] indices = new Integer[PLAYER_NUM];
-
-                for (int j = 0; j < indices.length; j++) {
-                    indices[j] = j;
-                }
-
-                Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
-
-                Player[] tempPlayers = players.clone();
-                for (int j = 0; j < indices.length; j++) {
-                    players[j] = tempPlayers[indices[j]];
-                }
-
-                Arrays.sort(scores);
-
-                int median;
-
-                if (scores.length % 2 == 0)
-                    median = (int) ((double) scores[scores.length / 2] + (double) scores[scores.length / 2 - 1]) / 2;
-                else
-                    median = scores[scores.length / 2];
-
-                this.medians.add(median);
-                if (median > maxscore)
-                    maxscore = median;
-
-                int best = IntStream.of(scores).max().getAsInt();
-
-                this.bests.add(best);
-                if (best > maxscore)
-                    maxscore = best;
-
-                Main.graph.repaint();
-
-                for (int j = 0; j < PLAYER_NUM * KILL_RATE; j++) {
-                    players[j + (int) (PLAYER_NUM * KILL_RATE)] = new Player(players[j]);
-                    players[j].mutate();
-                }
-
-            } catch (Exception e) {
-                Thread t = Thread.currentThread();
-                t.getUncaughtExceptionHandler().uncaughtException(t, e);
-            }
-
-        };
-
+    public Evolution() {
         for (int i = 0; i < PLAYER_NUM; i++) {
             players[i] = new Player();
         }
+    }
 
-        Thread t = new Thread(calc);
-        t.start();
-        t.join();
+    public void start() throws InterruptedException, ExecutionException {
 
-        for (int i = 0; i < GEN_NUM; i++) {
+        new Thread(() -> {
 
-            Thread t1 = new Thread(runBest);
-            Thread t2 = new Thread(calc);
-            t1.start();
-            t2.start();
+            try {
 
-            t1.join();
-            t2.join();
+                running = true;
 
-        }
+                while (running) {
+
+                    int[] scores = run();
+
+                    Integer[] indices = new Integer[PLAYER_NUM];
+
+                    for (int j = 0; j < indices.length; j++) {
+                        indices[j] = j;
+                    }
+
+                    Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
+
+                    Player[] tempPlayers = players.clone();
+                    for (int j = 0; j < indices.length; j++) {
+                        players[j] = tempPlayers[indices[j]];
+                    }
+
+                    Arrays.sort(scores);
+
+                    int median;
+
+                    if (scores.length % 2 == 0)
+                        median = (int) ((double) scores[scores.length / 2] + (double) scores[scores.length / 2 - 1]) / 2;
+                    else
+                        median = scores[scores.length / 2];
+
+                    this.medians.add(median);
+                    if (median > maxscore)
+                        maxscore = median;
+
+                    int best = IntStream.of(scores).max().getAsInt();
+
+                    this.bests.add(best);
+                    if (best > maxscore)
+                        maxscore = best;
+
+                    Main.graph.repaint();
+
+                    for (int j = 0; j < PLAYER_NUM * (1 - KILL_RATE); j++) {
+                        players[j + (int) (PLAYER_NUM * (1 - KILL_RATE))] = new Player(players[j]);
+                        players[j].mutate();
+                    }
+
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error!");
+            }
+
+        }).start();
+
+    }
+
+    public void pause() {
+        running = false;
+    }
+
+    public void runBest() {
+
+        Player player = new Player(players[0]);
+
+        bestplayers.add(player);
+
+        Main.network.repaint();
+
+        new Thread(() -> {
+
+            Main.game.initGame();
+
+            for (;;) {
+
+                if (!Main.game.game.game) {
+                    break;
+                }
+
+                Main.game.move(player.run(Main.game.game));
+
+                try {
+                    Thread.sleep(50);
+                } catch (Exception e) {
+                    System.out.println("Error!");
+                }
+
+            }
+
+        }).start();
 
     }
 

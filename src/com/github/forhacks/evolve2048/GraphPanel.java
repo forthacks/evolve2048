@@ -9,17 +9,10 @@ public class GraphPanel extends JPanel {
 
         setPreferredSize(new Dimension(500, 500));
 
-        setOpaque(true);
-        setBackground(new Color(0xfaf8ef));
-
     }
 
     @Override
     public void paint(Graphics g2) {
-
-        if (Main.evolution == null || Main.evolution.bests.size() == 0) {
-            return;
-        }
 
         Graphics2D g = (Graphics2D) g2;
 
@@ -38,22 +31,36 @@ public class GraphPanel extends JPanel {
         FontMetrics fm = g.getFontMetrics();
         g.setStroke(new BasicStroke(1));
 
-        for (int i = 0; i <= Main.evolution.maxscore * (3.8 / 3); i += Main.evolution.maxscore * (3.8 / 3) * 0.2) {
+        int s;
 
-            String s = Integer.toString(i);
+        if (Main.evolution == null || Main.evolution.bests.size() == 0) {
+            s = 1000;
+        } else {
+            s = Main.evolution.maxscore;
+        }
 
-            int y = 440 - (int) (((double) i / Main.evolution.maxscore) * 300.0);
-            int x = 70 - fm.stringWidth(s);
+        for (int i = 0; i <= s * (3.8 / 3); i += s * (3.8 / 3) * 0.2) {
+
+            String ss = Integer.toString(i);
+
+            int y = 440 - (int) (((double) i / s) * 300.0);
+            int x = 70 - fm.stringWidth(ss);
 
             g.drawLine(40, y, 460, y);
-            g.drawString(s, x, y - 3);
+            g.drawString(ss, x, y - 3);
 
         }
 
         g.setStroke(new BasicStroke(2));
         g.setColor(Color.RED);
 
-        for (int i = 0; i < Main.evolution.bests.size(); i++) {
+        if (Main.evolution == null || Main.evolution.bests.size() == 0) {
+            s = 0;
+        } else {
+            s = Main.evolution.bests.size();
+        }
+
+        for (int i = 0; i < s; i++) {
 
             int score = Main.evolution.bests.get(i);
 
