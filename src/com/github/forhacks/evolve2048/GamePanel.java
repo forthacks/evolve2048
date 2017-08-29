@@ -95,11 +95,6 @@ class GamePanel extends JPanel {
             }
         }
 
-        if (!game.game) {
-            g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
-            g.fillRect(0, 0, 500, 500);
-        }
-
     }
 
     private Color getBackground(int value) {

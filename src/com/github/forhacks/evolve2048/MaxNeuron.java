@@ -36,13 +36,6 @@ public class MaxNeuron extends Neuron {
 
     public double[] getData() {
 
-        double value = -1;
-
-        double up = 0;
-        double left = 0;
-        double down = 0;
-        double right = 0;
-
         int i = parents.size();
 
         Neuron parent1 = prev.neurons.get(parents.get(i - 2));
@@ -53,22 +46,22 @@ public class MaxNeuron extends Neuron {
 
         if (data1[0] > data2[0]) {
 
-            value = data1[0];
-            up = data1[1];
-            left = data1[2];
-            down = data1[3];
-            right = data1[4];
+            _value = data1[0];
+            _up = data1[1];
+            _left = data1[2];
+            _down = data1[3];
+            _right = data1[4];
 
         } else {
-            value = data2[0];
-            up = data2[1];
-            left = data2[2];
-            down = data2[3];
-            right = data2[4];
+            _value = data2[0];
+            _up = data2[1];
+            _left = data2[2];
+            _down = data2[3];
+            _right = data2[4];
 
         }
 
-        return new double[] {value, up, left, down, right};
+        return new double[] {_value, _up, _left, _down, _right};
 
     }
 }

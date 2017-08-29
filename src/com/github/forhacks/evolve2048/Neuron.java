@@ -10,6 +10,13 @@ public abstract class Neuron {
     double down;
     double right;
 
+    // Most recent values returned
+    double _value;
+    double _up;
+    double _left;
+    double _down;
+    double _right;
+
     List<Integer> parents;
     Layer prev;
 

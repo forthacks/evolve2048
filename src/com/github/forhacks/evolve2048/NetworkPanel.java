@@ -41,27 +41,30 @@ public class NetworkPanel extends JPanel {
                     } else if (n instanceof InputNeuron) {
                         g.drawString("IPT", x, y);
                     }
+                    g.drawString((n._value + "00000").substring(0, 5), x, y + 20);
+                    g.drawString((n.up + "00000").substring(0, 5) + ", " + (n._up + "00000").substring(0, 5), x, y + 40);
+                    g.drawString((n.left + "00000").substring(0, 5) + ", " + (n._left + "00000").substring(0, 5), x, y + 60);
+                    g.drawString((n.down + "00000").substring(0, 5) + ", " + (n._down + "00000").substring(0, 5), x, y + 80);
+                    g.drawString((n.right + "00000").substring(0, 5) + ", " + (n._right + "00000").substring(0, 5), x, y + 100);
 
                     if (!(n instanceof InputNeuron)) {
 
                         int size = n.parents.size();
 
-                        System.out.println(size);
-
                         if (size >= 2) {
 
-                            g.drawLine(x + 5, y - 12, 20 + 60 * n.parents.get(size - 2) + 5, y - 100 + 2);
-                            g.drawLine(x + 5, y - 12, 20 + 60 * n.parents.get(size - 1) + 5, y - 100 + 2);
+                            g.drawLine(x + 50, y - 12, 20 + 100 * n.parents.get(size - 2) + 50, y - 100 + 2);
+                            g.drawLine(x + 50, y - 12, 20 + 100 * n.parents.get(size - 1) + 50, y - 100 + 2);
 
                         }
 
                     }
 
-                    x += 60;
+                    x += 100;
 
                 }
 
-                y += 100;
+                y += 200;
 
             }
 

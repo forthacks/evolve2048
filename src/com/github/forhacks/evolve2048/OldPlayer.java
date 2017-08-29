@@ -52,7 +52,6 @@ class OldPlayer implements Cloneable {
         for(int i = 0; i < layerNum; i++) {
             p.layers.add(Layer.generate((i > 0) ? p.layers.get(i - 1).nodes.size() : 16));
         }
-        System.out.println(p.layers.size());
         return p;
     }
 

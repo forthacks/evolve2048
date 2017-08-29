@@ -35,8 +35,13 @@ public class WeightNeuron extends Neuron {
         int parent = parents.get(parents.size()-1);
         double[] data = prev.neurons.get(parent).getData();
 
-        double value = data[0] * weight;
-        double[] result = new double[] {value, data[1], data[2], data[3], data[4]};
+        _value = data[0] * weight;
+        _up = data[1];
+        _left = data[2];
+        _down = data[3];
+        _right = data[4];
+
+        double[] result = new double[] {_value, _up, _left, _down, _right};
         return result;
 
     }
