@@ -58,7 +58,7 @@ public class AndNeuron extends Neuron {
         if (data1[0] == data2[0]) {
             _value = data1[0];
         }
-        _value = Math.abs(Math.log(data2[0]) - Math.log(data1[0])) / Math.log(2);
+        _value = 1/Math.abs((data2[0]) - (data1[0]));
         _up += (data1[1] + data2[1])/2;
         _left += (data1[2] + data2[2])/2;
         _down += (data1[3] + data2[3])/2;

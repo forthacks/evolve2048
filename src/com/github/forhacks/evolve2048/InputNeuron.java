@@ -18,7 +18,7 @@ public class InputNeuron extends Neuron {
 
     public double[] getData() {
 
-        return new double[] {_value, 0, 0, 0, 0};
+        return new double[] {Math.log(_value)/Math.log(2), 0, 0, 0, 0};
 
     }
 
