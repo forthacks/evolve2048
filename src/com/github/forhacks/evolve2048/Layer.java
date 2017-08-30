@@ -3,6 +3,7 @@ package com.github.forhacks.evolve2048;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Layer {
@@ -57,10 +58,55 @@ public class Layer {
 
         neurons = new ArrayList<>();
 
-        int size = (int) (Math.random() * (MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES);
+        if (prev.neurons.get(0) instanceof InputNeuron) {
 
-        for (int i = 0; i < size; i++) {
-            addNeuron(prev);
+            int size = (int) (Math.random() * 8) + 10;
+
+            List<Integer> ipts = new ArrayList<>();
+            for (int i = 0; i < 16; i++) {
+                ipts.add(i);
+            }
+
+            int z = 16;
+            for (int i = 0; i < size; i++) {
+
+                int type = (int) (Math.random() * 2);
+
+                if (z == 16) {
+                    z = 0;
+                    Collections.shuffle(ipts);
+                }
+                int n1 = z++;
+
+                if (z == 16) {
+                    z = 0;
+                    Collections.shuffle(ipts);
+                }
+                int n2 = z++;
+
+                if (type == 0)
+                    this.neurons.add(
+                            new AndNeuron(
+                                    new ArrayList<>(Arrays.asList(n1, n2)), prev
+                            )
+                    );
+                else if (type == 1)
+                    this.neurons.add(
+                            new MaxNeuron(
+                                    new ArrayList<>(Arrays.asList(n1, n2)), prev
+                            )
+                    );
+
+            }
+
+        } else {
+
+            int size = (int) (Math.random() * (MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES);
+
+            for (int i = 0; i < size; i++) {
+                addNeuron(prev);
+            }
+
         }
 
     }
@@ -74,7 +120,7 @@ public class Layer {
             n2 = (int) (Math.random() * prev.neurons.size());
         }
 
-        int type = (int) (Math.random() * 3);
+        int type = (int) (Math.random() * 2);
 
         if (type == 0)
             this.neurons.add(
@@ -86,12 +132,6 @@ public class Layer {
             this.neurons.add(
                     new MaxNeuron(
                             new ArrayList<>(Arrays.asList(n1, n2)), prev
-                    )
-            );
-        else if (type == 2)
-            this.neurons.add(
-                    new WeightNeuron(
-                            new ArrayList<>(Arrays.asList(n1)), prev
                     )
             );
     }

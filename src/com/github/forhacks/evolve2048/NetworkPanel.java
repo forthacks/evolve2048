@@ -48,7 +48,7 @@ public class NetworkPanel extends JPanel {
                     }
 
                     g.setColor(new Color(0x000000));
-                    g.drawString((n._value + "00000").substring(0, 5), x+23, y + 20);
+                    g.drawString(df.format(n._value), x+23, y + 20);
 
                     g.setFont(g.getFont().deriveFont(Font.PLAIN));
                     g.drawString(df.format(n.up) + ", " + df.format(n._up), x, y + 40);

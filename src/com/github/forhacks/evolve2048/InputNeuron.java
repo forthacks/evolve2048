@@ -13,12 +13,12 @@ public class InputNeuron extends Neuron {
     }
 
     public void setValue(int value) {
-        this.value = value; this._value = value;
+        this.value = Math.log(value) / Math.log(2); this._value = this.value;
     }
 
     public double[] getData() {
 
-        return new double[] {Math.log(_value)/Math.log(2), 0, 0, 0, 0};
+        return new double[] {_value, 0, 0, 0, 0};
 
     }
 

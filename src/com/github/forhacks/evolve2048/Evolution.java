@@ -6,9 +6,8 @@ import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 50;
+    private static final int PLAYER_NUM = 400;
     private static final int NUM_TRIAL = 20;
-    private static final int GEN_NUM = 20000;
     private static final double KILL_RATE = 0.5;
 
     List<Player> bestplayers = new ArrayList<>();
