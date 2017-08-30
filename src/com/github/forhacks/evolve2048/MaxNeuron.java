@@ -4,8 +4,7 @@ import java.util.List;
 
 public class MaxNeuron extends Neuron {
 
-    private static final double MAX_CHANGE = 0.1;
-    private static final double ADD_PROB = 0.05;
+    private static final double ADD_PROB = 0.1;
 
     public MaxNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
@@ -13,11 +12,6 @@ public class MaxNeuron extends Neuron {
 
     @Override
     public void mutate(Layer prev) {
-
-        up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
 
         if (Math.random() < ADD_PROB) {
 

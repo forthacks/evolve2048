@@ -10,7 +10,7 @@ public class Layer {
 
     private static final int MAX_INIT_NODES=10;
     private static final int MIN_INIT_NODES=4;
-    private static final double NODE_ADD_PROB = 0.01;
+    private static final double NODE_ADD_PROB = 0.1;
 
     List<Neuron> neurons;
 
@@ -58,55 +58,10 @@ public class Layer {
 
         neurons = new ArrayList<>();
 
-        if (prev.neurons.get(0) instanceof InputNeuron) {
+        int size = (int) (Math.random() * (MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES);
 
-            int size = (int) (Math.random() * 8) + 10;
-
-            List<Integer> ipts = new ArrayList<>();
-            for (int i = 0; i < 16; i++) {
-                ipts.add(i);
-            }
-
-            int z = 16;
-            for (int i = 0; i < size; i++) {
-
-                int type = (int) (Math.random() * 2);
-
-                if (z == 16) {
-                    z = 0;
-                    Collections.shuffle(ipts);
-                }
-                int n1 = z++;
-
-                if (z == 16) {
-                    z = 0;
-                    Collections.shuffle(ipts);
-                }
-                int n2 = z++;
-
-                if (type == 0)
-                    this.neurons.add(
-                            new AndNeuron(
-                                    new ArrayList<>(Arrays.asList(n1, n2)), prev
-                            )
-                    );
-                else if (type == 1)
-                    this.neurons.add(
-                            new MaxNeuron(
-                                    new ArrayList<>(Arrays.asList(n1, n2)), prev
-                            )
-                    );
-
-            }
-
-        } else {
-
-            int size = (int) (Math.random() * (MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES);
-
-            for (int i = 0; i < size; i++) {
-                addNeuron(prev);
-            }
-
+        for (int i = 0; i < size; i++) {
+            addNeuron(prev);
         }
 
     }

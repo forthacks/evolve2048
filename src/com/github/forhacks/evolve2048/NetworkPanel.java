@@ -28,6 +28,7 @@ public class NetworkPanel extends JPanel {
             g.setFont(g.getFont().deriveFont(14f));
 
             int y = 30;
+            int maxx = 0;
 
             for (Layer l : Main.evolution.bestplayers.get(Main.evolution.bestplayers.size() - 1).layers) {
 
@@ -72,13 +73,16 @@ public class NetworkPanel extends JPanel {
 
                     x += 100;
 
+                    if (x > maxx)
+                        maxx = x;
+
                 }
 
                 y += 200;
 
             }
 
-            setPreferredSize(new Dimension(1000, y + 20));
+            setPreferredSize(new Dimension(maxx + 50, y + 20));
 
         }
 

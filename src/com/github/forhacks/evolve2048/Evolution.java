@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 400;
+    private static final int PLAYER_NUM = 100;
     private static final int NUM_TRIAL = 20;
     private static final double KILL_RATE = 0.5;
 

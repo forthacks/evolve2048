@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AndNeuron extends Neuron {
 
-    private static final double MAX_CHANGE = 0.1;
+    private static final double MAX_CHANGE = 1;
     private static final double ADD_PROB = 0.05;
 
     public AndNeuron(List<Integer> parents, Layer prev) {
