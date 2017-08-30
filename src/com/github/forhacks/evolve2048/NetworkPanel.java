@@ -2,8 +2,11 @@ package com.github.forhacks.evolve2048;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class NetworkPanel extends JPanel {
+
+    DecimalFormat df = new DecimalFormat("0.000");
 
     public NetworkPanel() {
 
@@ -32,20 +35,26 @@ public class NetworkPanel extends JPanel {
 
                 for (Neuron n : l.neurons) {
 
+                    g.setFont(g.getFont().deriveFont(Font.BOLD));
+                    g.setColor(new Color(0x3E86A0));
                     if (n instanceof AndNeuron) {
-                        g.drawString("AND", x, y);
+                        g.drawString("AND", x + 27, y);
                     } else if (n instanceof MaxNeuron) {
-                        g.drawString("MAX", x, y);
+                        g.drawString("MAX", x + 27, y);
                     } else if (n instanceof WeightNeuron) {
-                        g.drawString("WHT", x, y);
+                        g.drawString("WHT", x + 27, y);
                     } else if (n instanceof InputNeuron) {
-                        g.drawString("IPT", x, y);
+                        g.drawString("IPT", x + 27, y);
                     }
-                    g.drawString((n._value + "00000").substring(0, 5), x, y + 20);
-                    g.drawString((n.up + "00000").substring(0, 5) + ", " + (n._up + "00000").substring(0, 5), x, y + 40);
-                    g.drawString((n.left + "00000").substring(0, 5) + ", " + (n._left + "00000").substring(0, 5), x, y + 60);
-                    g.drawString((n.down + "00000").substring(0, 5) + ", " + (n._down + "00000").substring(0, 5), x, y + 80);
-                    g.drawString((n.right + "00000").substring(0, 5) + ", " + (n._right + "00000").substring(0, 5), x, y + 100);
+
+                    g.setColor(new Color(0x000000));
+                    g.drawString((n._value + "00000").substring(0, 5), x+23, y + 20);
+
+                    g.setFont(g.getFont().deriveFont(Font.PLAIN));
+                    g.drawString(df.format(n.up) + ", " + df.format(n._up), x, y + 40);
+                    g.drawString(df.format(n.left) + ", " + df.format(n._left), x, y + 60);
+                    g.drawString(df.format(n.down) + ", " + df.format(n._down), x, y + 80);
+                    g.drawString(df.format(n.right) + ", " + df.format(n._right), x, y + 100);
 
                     if (!(n instanceof InputNeuron)) {
 
@@ -53,8 +62,9 @@ public class NetworkPanel extends JPanel {
 
                         if (size >= 2) {
 
-                            g.drawLine(x + 50, y - 12, 20 + 100 * n.parents.get(size - 2) + 50, y - 100 + 2);
-                            g.drawLine(x + 50, y - 12, 20 + 100 * n.parents.get(size - 1) + 50, y - 100 + 2);
+                            g.setColor(new Color(0x3E86A0));
+                            g.drawLine(x + 50, y - 15, 100 * n.parents.get(size - 2) + 75, y - 95);
+                            g.drawLine(x + 50, y - 15, 100 * n.parents.get(size - 1) + 75, y - 95);
 
                         }
 

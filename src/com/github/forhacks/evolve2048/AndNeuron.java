@@ -43,8 +43,6 @@ public class AndNeuron extends Neuron {
 
     public double[] getData() {
 
-        double value = -1;
-
         _up = up; _left = left; _down = down; _right = right;
 
         int i = parents.size();
@@ -55,10 +53,8 @@ public class AndNeuron extends Neuron {
         double[] data1 = parent1.getData();
         double[] data2 = parent2.getData();
 
-        if (data1[0] == data2[0]) {
-            _value = data1[0];
-        }
-        _value = 1/Math.abs((data2[0]) - (data1[0]));
+        _value = 0-((Math.min(data1[0], data2[0])-Math.max(data1[0],data2[0])));
+
         _up += (data1[1] + data2[1])/2;
         _left += (data1[2] + data2[2])/2;
         _down += (data1[3] + data2[3])/2;
