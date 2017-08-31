@@ -42,8 +42,6 @@ public class NetworkPanel extends JPanel {
                         g.drawString("AND", x + 27, y);
                     } else if (n instanceof MaxNeuron) {
                         g.drawString("MAX", x + 27, y);
-                    } else if (n instanceof WeightNeuron) {
-                        g.drawString("WHT", x + 27, y);
                     } else if (n instanceof InputNeuron) {
                         g.drawString("IPT", x + 27, y);
                     }

@@ -37,8 +37,6 @@ public class Layer {
                 neurons.add(new MaxNeuron(new ArrayList<>(n.parents), prev));
             else if (n instanceof InputNeuron)
                 neurons.add(new InputNeuron());
-            else if (n instanceof WeightNeuron)
-                neurons.add(new WeightNeuron(new ArrayList<>(n.parents), prev));
         }
 
     }

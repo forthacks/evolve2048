@@ -87,6 +87,20 @@ class Game extends JPanel {
 
     }
 
+    public int maxTile() {
+
+        int max = 0;
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                max = Integer.max(grid[i][j], max);
+            }
+        }
+
+        return max;
+
+    }
+
     private void addTile() {
 
         List<int[]> available = new ArrayList<>();

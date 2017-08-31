@@ -2,12 +2,11 @@ package com.github.forhacks.evolve2048;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.stream.IntStream;
 
 public class Evolution {
 
     private static final int PLAYER_NUM = 100;
-    private static final int NUM_TRIAL = 20;
+    private static final int NUM_TRIAL = 30;
     private static final double KILL_RATE = 0.5;
 
     List<Player> bestplayers = new ArrayList<>();
@@ -35,7 +34,7 @@ public class Evolution {
 
                 while (running) {
 
-                    int[] scores = run();
+                    Integer[][] r = run();
 
                     Integer[] indices = new Integer[PLAYER_NUM];
 
@@ -43,31 +42,36 @@ public class Evolution {
                         indices[j] = j;
                     }
 
-                    Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-scores[o])));
+                    Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-r[o][0])));
 
                     Player[] tempPlayers = players.clone();
                     for (int j = 0; j < indices.length; j++) {
                         players[j] = tempPlayers[indices[j]];
                     }
 
-                    Arrays.sort(scores);
+                    int best = 0;
+                    for (int i = 0; i < PLAYER_NUM; i++) {
+                        if (r[i][0] > r[best][0]) {
+                            best = i;
+                        }
+                    }
+
+                    this.bests.add(r[best][0]);
+                    if (r[best][0] > maxscore)
+                        maxscore = r[best][0];
 
                     int median;
 
-                    if (scores.length % 2 == 0)
-                        median = (int) ((double) scores[scores.length / 2] + (double) scores[scores.length / 2 - 1]) / 2;
+                    Arrays.sort(r, (Integer[] o1, Integer[] o2) -> o2[0].compareTo(o1[0]));
+
+                    if (r.length % 2 == 0)
+                        median = (int) ((double) r[r.length / 2][0] + (double) r[r.length / 2 - 1][0]) / 2;
                     else
-                        median = scores[scores.length / 2];
+                        median = r[r.length / 2][0];
 
                     this.medians.add(median);
                     if (median > maxscore)
                         maxscore = median;
-
-                    int best = IntStream.of(scores).max().getAsInt();
-
-                    this.bests.add(best);
-                    if (best > maxscore)
-                        maxscore = best;
 
                     Main.graph.repaint();
 
@@ -131,9 +135,9 @@ public class Evolution {
         return false;
     }
 
-    public int[] run() throws InterruptedException, ExecutionException {
+    public Integer[][] run() throws InterruptedException, ExecutionException {
 
-        List<Callable<Integer>> threads = new ArrayList<>();
+        List<Callable<Integer[]>> threads = new ArrayList<>();
 
         ExecutorService executor = Executors.newWorkStealingPool();
 
@@ -141,13 +145,15 @@ public class Evolution {
 
             final int z = i;
 
-            Callable<Integer> thread = () -> {
+            Callable<Integer[]> thread = () -> {
 
                 int score = 0;
+                int max = 0;
                 for (int j = 0; j < NUM_TRIAL; j++) {
                     Game game = new Game();
                     for (;;) {
                         if (!game.game) {
+                            max += game.maxTile();
                             break;
                         }
                         int r = players[z].run(game);
@@ -155,7 +161,7 @@ public class Evolution {
                     }
                     score += game.score;
                 }
-                return score / NUM_TRIAL;
+                return new Integer[] {score / NUM_TRIAL, max / NUM_TRIAL};
 
             };
 
@@ -163,12 +169,13 @@ public class Evolution {
 
         }
 
-        List<Future<Integer>> scores = executor.invokeAll(threads);
+        List<Future<Integer[]>> scores = executor.invokeAll(threads);
 
-        int[] result = new int[PLAYER_NUM];
+        Integer[][] result = new Integer[PLAYER_NUM][2];
 
         for (int i = 0; i < PLAYER_NUM; i++) {
-            result[i] = scores.get(i).get();
+            Integer[] a = scores.get(i).get();
+            result[i] = a;
         }
 
         return result;

@@ -53,7 +53,7 @@ public class AndNeuron extends Neuron {
         double[] data1 = parent1.getData();
         double[] data2 = parent2.getData();
 
-        _value = Math.min(data1[0], data2[0])-Math.abs(data1[0] - data2[0]);
+        _value = Math.abs(data1[0] - data2[0]);
 
         _up += (data1[1] + data2[1])/2;
         _left += (data1[2] + data2[2])/2;

@@ -49,7 +49,7 @@ public class Player {
             Neuron n = layers.get(0).neurons.get(i);
             if (n instanceof InputNeuron) {
                 InputNeuron n2 = (InputNeuron) n;
-                n2.setValue(game.grid[i/4][i%4]);
+                n2.setValue(game.grid[i/4][i%4], game.maxTile());
             }
         }
 

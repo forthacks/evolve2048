@@ -12,8 +12,9 @@ public class InputNeuron extends Neuron {
         super(new ArrayList<>(), null);
     }
 
-    public void setValue(int value) {
-        this.value = Math.log(value) / Math.log(2); this._value = this.value;
+    public void setValue(int value, int maxvalue) {
+        this.value = Math.log(value) / Math.log(maxvalue);
+        this._value = this.value;
     }
 
     public double[] getData() {
