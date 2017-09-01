@@ -40,8 +40,8 @@ public class NetworkPanel extends JPanel {
                     g.setColor(new Color(0x3E86A0));
                     if (n instanceof AndNeuron) {
                         g.drawString("AND", x + 27, y);
-                    } else if (n instanceof MaxNeuron) {
-                        g.drawString("MAX", x + 27, y);
+                    } else if (n instanceof MinNeuron) {
+                        g.drawString("MIN", x + 27, y);
                     } else if (n instanceof InputNeuron) {
                         g.drawString("IPT", x + 27, y);
                     }

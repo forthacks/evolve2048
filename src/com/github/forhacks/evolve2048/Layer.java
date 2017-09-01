@@ -3,7 +3,6 @@ package com.github.forhacks.evolve2048;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Layer {
@@ -33,8 +32,8 @@ public class Layer {
         for (Neuron n : original.neurons) {
             if (n instanceof AndNeuron)
                 neurons.add(new AndNeuron(new ArrayList<>(n.parents), prev, n.up, n.left, n.down, n.right));
-            else if (n instanceof MaxNeuron)
-                neurons.add(new MaxNeuron(new ArrayList<>(n.parents), prev));
+            else if (n instanceof MinNeuron)
+                neurons.add(new MinNeuron(new ArrayList<>(n.parents), prev));
             else if (n instanceof InputNeuron)
                 neurons.add(new InputNeuron());
         }
@@ -83,7 +82,7 @@ public class Layer {
             );
         else if (type == 1)
             this.neurons.add(
-                    new MaxNeuron(
+                    new MinNeuron(
                             new ArrayList<>(Arrays.asList(n1, n2)), prev
                     )
             );

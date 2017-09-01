@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 
 public class Evolution {
 
-    private static final int PLAYER_NUM = 100;
+    private static final int PLAYER_NUM = 80;
     private static final int NUM_TRIAL = 30;
     private static final double KILL_RATE = 0.5;
 
@@ -51,7 +51,7 @@ public class Evolution {
 
                     int best = 0;
                     for (int i = 0; i < PLAYER_NUM; i++) {
-                        if (r[i][0] > r[best][0]) {
+                        if (r[i][1] > r[best][1]) {
                             best = i;
                         }
                     }
@@ -62,7 +62,7 @@ public class Evolution {
 
                     int median;
 
-                    Arrays.sort(r, (Integer[] o1, Integer[] o2) -> o2[0].compareTo(o1[0]));
+                    Arrays.sort(r, (Integer[] o1, Integer[] o2) -> o2[1].compareTo(o1[1]));
 
                     if (r.length % 2 == 0)
                         median = (int) ((double) r[r.length / 2][0] + (double) r[r.length / 2 - 1][0]) / 2;
@@ -111,10 +111,14 @@ public class Evolution {
                 }
 
                 Main.game.move(player.run(Main.game.game));
+                Main.network.repaint();
+
+                try {
+                    Thread.sleep(10);
+                } catch (Exception e) {}
 
             }
 
-            Main.network.repaint();
 
         }).start();
 
@@ -161,7 +165,8 @@ public class Evolution {
                     }
                     score += game.score;
                 }
-                return new Integer[] {score / NUM_TRIAL, max / NUM_TRIAL};
+                return new Integer[] {score / NUM_TRIAL, score / NUM_TRIAL};
+                // [score, fitness]
 
             };
 
