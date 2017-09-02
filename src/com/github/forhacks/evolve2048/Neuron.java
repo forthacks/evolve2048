@@ -21,10 +21,10 @@ abstract class Neuron {
 
     Neuron(List<Integer> parents, Layer prev) {
 
-        this.up = Math.random();
-        this.down = Math.random();
-        this.left = Math.random();
-        this.right = Math.random();
+        this.up = Main.random.nextDouble();
+        this.down = Main.random.nextDouble();
+        this.left = Main.random.nextDouble();
+        this.right = Main.random.nextDouble();
 
         this.prev = prev;
 

@@ -15,7 +15,7 @@ class Player {
 
     Player() {
 
-        int size = (int) (Math.random() * (MAX_INIT_LAYER - MIN_INIT_LAYER) + MIN_INIT_LAYER);
+        int size = Main.random.nextInt(MAX_INIT_LAYER - MIN_INIT_LAYER) + MIN_INIT_LAYER;
 
         layers = new ArrayList<>();
 
@@ -84,7 +84,7 @@ class Player {
             layers.get(i).mutate(layers.get(i - 1));
         }
 
-        if (Math.random() < LAYER_ADD_PROB) {
+        if (Main.random.nextDouble() < LAYER_ADD_PROB) {
             layers.add(new Layer(layers.get(layers.size() - 1)));
         }
 

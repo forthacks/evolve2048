@@ -3,14 +3,11 @@ package com.github.forhacks.evolve2048;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 class Game extends JPanel {
 
     // grid[row][column]
     int[][] grid;
-
-    private Random random = new Random();
 
     boolean game;
 
@@ -129,11 +126,11 @@ class Game extends JPanel {
             }
         }
 
-        int[] add = available.get(random.nextInt(available.size()));
+        int[] add = available.get(Main.random.nextInt(available.size()));
 
         int number = 2;
 
-        float chance = random.nextFloat();
+        float chance = Main.random.nextFloat();
 
         if (chance <= 0.10f) {
             number = 4;

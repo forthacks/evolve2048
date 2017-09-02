@@ -22,17 +22,17 @@ class AndNeuron extends Neuron {
     @Override
     void mutate(Layer prev) {
 
-        up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        down += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
-        right += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
+        up += Main.random.nextDouble() * 2 * MAX_CHANGE - MAX_CHANGE;
+        left += Main.random.nextDouble() * 2 * MAX_CHANGE - MAX_CHANGE;
+        down += Main.random.nextDouble() * 2 * MAX_CHANGE - MAX_CHANGE;
+        right += Main.random.nextDouble() * 2 * MAX_CHANGE - MAX_CHANGE;
 
-        if (Math.random() < ADD_PROB) {
+        if (Main.random.nextDouble() < ADD_PROB) {
 
-            int n1 = (int) (Math.random() * prev.neurons.size());
-            int n2 = (int) (Math.random() * prev.neurons.size());
+            int n1 = Main.random.nextInt(prev.neurons.size());
+            int n2 = Main.random.nextInt(prev.neurons.size());
             while (n2 == n1) {
-                n2 = (int) (Math.random() * prev.neurons.size());
+                n2 = Main.random.nextInt(prev.neurons.size());
             }
 
             parents.add(n1);

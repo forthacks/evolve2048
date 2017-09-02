@@ -19,7 +19,7 @@ class Layer {
             n.mutate(prev);
         }
 
-        if (Math.random() < NODE_ADD_PROB) {
+        if (Main.random.nextDouble() < NODE_ADD_PROB) {
             addNeuron(prev);
         }
 
@@ -55,7 +55,7 @@ class Layer {
 
         neurons = new ArrayList<>();
 
-        int size = (int) (Math.random() * (MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES);
+        int size = Main.random.nextInt(MAX_INIT_NODES - MIN_INIT_NODES) + MIN_INIT_NODES;
 
         for (int i = 0; i < size; i++) {
             addNeuron(prev);
@@ -65,14 +65,14 @@ class Layer {
 
     private void addNeuron(Layer prev) {
 
-        int n1 = (int) (Math.random() * prev.neurons.size());
-        int n2 = (int) (Math.random() * prev.neurons.size());
+        int n1 = Main.random.nextInt(prev.neurons.size());
+        int n2 = Main.random.nextInt(prev.neurons.size());
 
         while (n2 == n1) {
-            n2 = (int) (Math.random() * prev.neurons.size());
+            n2 = Main.random.nextInt(prev.neurons.size());
         }
 
-        int type = (int) (Math.random() * 2);
+        int type = Main.random.nextInt(2);
 
         if (type == 0)
             this.neurons.add(

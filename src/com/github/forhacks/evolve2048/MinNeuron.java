@@ -13,12 +13,12 @@ public class MinNeuron extends Neuron {
     @Override
     public void mutate(Layer prev) {
 
-        if (Math.random() < ADD_PROB) {
+        if (Main.random.nextDouble() < ADD_PROB) {
 
-            int n1 = (int) (Math.random() * prev.neurons.size());
-            int n2 = (int) (Math.random() * prev.neurons.size());
+            int n1 = Main.random.nextInt(prev.neurons.size());
+            int n2 = Main.random.nextInt(prev.neurons.size());
             while (n2 == n1) {
-                n2 = (int) (Math.random() * prev.neurons.size());
+                n2 = Main.random.nextInt(prev.neurons.size());
             }
 
             parents.add(n1);

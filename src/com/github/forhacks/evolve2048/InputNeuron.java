@@ -11,7 +11,7 @@ class InputNeuron extends Neuron {
     }
 
     void setValue(int value, int maxvalue) {
-        if(value != 0)
+        if (value != 0)
             this.value = Math.log(value) / Math.log(maxvalue);
         this._value = this.value;
     }

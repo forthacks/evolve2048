@@ -1,8 +1,14 @@
 package com.github.forhacks.evolve2048;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class Main extends JPanel {
@@ -11,8 +17,14 @@ public class Main extends JPanel {
     static GraphPanel graph;
     static NetworkPanel network;
     static Evolution evolution;
+    static Random random;
+    private static long seed;
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+        random = new Random();
+        seed = random.nextLong();
+        random.setSeed(seed);
 
         JFrame frame = new JFrame();
         frame.setTitle("2048");
@@ -34,24 +46,74 @@ public class Main extends JPanel {
         one.gridx = 0;
         one.gridy = 0;
         one.ipady = 20;
-        one.gridwidth = 2;
+        one.ipadx = 10;
+        one.gridwidth = 1;
         one.weightx = 1;
 
         GridBagConstraints two = new GridBagConstraints();
         two.fill = GridBagConstraints.HORIZONTAL;
-        two.gridx = 2;
+        two.gridx = 1;
         two.gridy = 0;
         two.ipady = 20;
-        two.gridwidth = 2;
+        two.gridwidth = 1;
         two.weightx = 1;
 
         GridBagConstraints three = new GridBagConstraints();
         three.fill = GridBagConstraints.HORIZONTAL;
-        three.gridx = 4;
+        three.gridx = 2;
         three.gridy = 0;
         three.ipady = 20;
-        three.gridwidth = 2;
+        three.gridwidth = 1;
         three.weightx = 1;
+
+        GridBagConstraints four = new GridBagConstraints();
+        four.fill = GridBagConstraints.HORIZONTAL;
+        four.gridx = 3;
+        four.gridy = 0;
+        four.ipady = 20;
+        four.gridwidth = 1;
+        four.weightx = 1;
+
+        JTextArea seedLabel = new JTextArea();
+        seedLabel.setText(Long.toString(seed));
+        seedLabel.setBackground(null);
+        seedLabel.setMargin(new Insets(20, 10, 0, 0));
+
+        Document doc = seedLabel.getDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                try {
+                    seed = Long.parseLong(seedLabel.getText());
+                } catch (Exception err) {
+                    System.out.println("Error!");
+                }
+                random.setSeed(seed);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                try {
+                    seed = Long.parseLong(seedLabel.getText());
+                } catch (Exception err) {
+                    System.out.println("Error!");
+                }
+                random.setSeed(seed);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                try {
+                    seed = Long.parseLong(seedLabel.getText());
+                } catch (Exception err) {
+                    System.out.println("Error!");
+                }
+                random.setSeed(seed);
+            }
+        });
+
 
         JButton start = new JButton("Start");
         start.addActionListener((ActionEvent e) -> {
@@ -78,29 +140,30 @@ public class Main extends JPanel {
             }
         });
 
-        panel.add(start, one);
-        panel.add(pause, two);
-        panel.add(run, three);
+        panel.add(seedLabel, one);
+        panel.add(start, two);
+        panel.add(pause, three);
+        panel.add(run, four);
 
         GridBagConstraints gamec = new GridBagConstraints();
         gamec.fill = GridBagConstraints.HORIZONTAL;
         gamec.gridx = 0;
         gamec.gridy = 1;
-        gamec.gridwidth = 3;
+        gamec.gridwidth = 2;
         gamec.weightx = 1;
 
         GridBagConstraints graphc = new GridBagConstraints();
         graphc.fill = GridBagConstraints.HORIZONTAL;
-        graphc.gridx = 3;
+        graphc.gridx = 2;
         graphc.gridy = 1;
-        graphc.gridwidth = 3;
+        graphc.gridwidth = 2;
         graphc.weightx = 1;
 
         GridBagConstraints networkc = new GridBagConstraints();
         networkc.fill = GridBagConstraints.HORIZONTAL;
         networkc.gridx = 0;
         networkc.gridy = 2;
-        networkc.gridwidth = 6;
+        networkc.gridwidth = 4;
         networkc.weightx = 1;
 
         panel.add(game, gamec);
