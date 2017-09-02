@@ -13,7 +13,8 @@ public class InputNeuron extends Neuron {
     }
 
     public void setValue(int value, int maxvalue) {
-        this.value = Math.log(value) / Math.log(maxvalue);
+        if(value != 0)
+            this.value = Math.log(value) / Math.log(maxvalue);
         this._value = this.value;
     }
 
