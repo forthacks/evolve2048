@@ -101,6 +101,22 @@ class Game extends JPanel {
 
     }
 
+    public int emptyTileCount() {
+
+        int count = 0;
+
+        for (int[] row : grid) {
+            for (int tile : row) {
+                if (tile == 0) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+    }
+
     private void addTile() {
 
         List<int[]> available = new ArrayList<>();
