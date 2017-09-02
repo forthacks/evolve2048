@@ -3,7 +3,7 @@ package com.github.forhacks.evolve2048;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class Evolution {
+class Evolution {
 
     private static final int PLAYER_NUM = 80;
     private static final int NUM_TRIAL = 30;
@@ -11,20 +11,22 @@ public class Evolution {
 
     List<Player> bestplayers = new ArrayList<>();
 
-    Player[] players = new Player[PLAYER_NUM];
+    private Player[] players = new Player[PLAYER_NUM];
     int maxscore = 0;
     List<Integer> bests = new ArrayList<>();
     List<Integer> medians = new ArrayList<>();
 
-    boolean running = false;
+    private boolean running = false;
 
-    public Evolution() {
+    Evolution() {
         for (int i = 0; i < PLAYER_NUM; i++) {
             players[i] = new Player();
         }
     }
 
-    public void start() throws InterruptedException, ExecutionException {
+    void start() throws InterruptedException, ExecutionException {
+
+        if (running) return;
 
         new Thread(() -> {
 
@@ -90,11 +92,11 @@ public class Evolution {
 
     }
 
-    public void pause() {
+    void pause() {
         running = false;
     }
 
-    public void runBest() {
+    void runBest() {
 
         Player player = new Player(players[0]);
 
@@ -115,7 +117,9 @@ public class Evolution {
 
                 try {
                     Thread.sleep(10);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    System.out.println("Error!");
+                }
 
             }
 
@@ -124,22 +128,7 @@ public class Evolution {
 
     }
 
-    public boolean isRipple() {
-        int[][] grid = Main.game.game.grid;
-        if ((grid[0][2] == grid[1][1]) && (grid[0][2] == grid[2][0])) {
-            return true;
-        } else if ((grid[1][3] == grid[2][2]) && (grid[1][3] == grid[3][1])) {
-            return true;
-        } else if (((grid[0][3] == grid[1][2]) && (grid[0][3] == grid[2][1])) ||
-                ((grid[0][3] == grid[1][2]) && (grid[0][3] == grid[3][0])) ||
-                ((grid[0][3] == grid[2][1]) && (grid[0][3] == grid[3][0])) ||
-                ((grid[1][2] == grid[2][1]) && (grid[1][2] == grid[3][0]))) {
-            return true;
-        }
-        return false;
-    }
-
-    public Integer[][] run() throws InterruptedException, ExecutionException {
+    private Integer[][] run() throws InterruptedException, ExecutionException {
 
         List<Callable<Integer[]>> threads = new ArrayList<>();
 
@@ -152,12 +141,10 @@ public class Evolution {
             Callable<Integer[]> thread = () -> {
 
                 int score = 0;
-                int max = 0;
                 for (int j = 0; j < NUM_TRIAL; j++) {
                     Game game = new Game();
                     for (;;) {
                         if (!game.game) {
-                            max += game.maxTile();
                             break;
                         }
                         int r = players[z].run(game);

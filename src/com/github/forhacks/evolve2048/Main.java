@@ -7,10 +7,10 @@ import java.util.concurrent.ExecutionException;
 
 public class Main extends JPanel {
 
-    public static GamePanel game;
-    public static GraphPanel graph;
-    public static NetworkPanel network;
-    public static Evolution evolution;
+    static GamePanel game;
+    static GraphPanel graph;
+    static NetworkPanel network;
+    static Evolution evolution;
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 

@@ -6,7 +6,7 @@ public class MinNeuron extends Neuron {
 
     private static final double ADD_PROB = 0.1;
 
-    public MinNeuron(List<Integer> parents, Layer prev) {
+    MinNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
     }
 

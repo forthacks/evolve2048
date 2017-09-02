@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GraphPanel extends JPanel {
 
-    public GraphPanel() {
+    GraphPanel() {
 
         setPreferredSize(new Dimension(500, 500));
 

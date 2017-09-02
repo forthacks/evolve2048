@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class Player {
+class Player {
 
     private static final int MAX_INIT_LAYER = 4;
     private static final int MIN_INIT_LAYER = 2;
@@ -13,7 +13,7 @@ public class Player {
 
     List<Layer> layers;
 
-    public Player() {
+    Player() {
 
         int size = (int) (Math.random() * (MAX_INIT_LAYER - MIN_INIT_LAYER) + MIN_INIT_LAYER);
 
@@ -29,7 +29,7 @@ public class Player {
 
     }
 
-    public Player(Player original) {
+    Player(Player original) {
 
         layers = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class Player {
 
     }
 
-    public void mutate() {
+    void mutate() {
 
 
         for (int i = 1; i < layers.size(); i++) {

@@ -6,9 +6,9 @@ import java.text.DecimalFormat;
 
 public class NetworkPanel extends JPanel {
 
-    DecimalFormat df = new DecimalFormat("0.000");
+    private DecimalFormat df = new DecimalFormat("0.000");
 
-    public NetworkPanel() {
+    NetworkPanel() {
 
         setPreferredSize(new Dimension(1000, 250));
 

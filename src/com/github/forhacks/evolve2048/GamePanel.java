@@ -9,7 +9,7 @@ class GamePanel extends JPanel {
 
     Game game;
 
-    public GamePanel(boolean allowKeypresses) {
+    GamePanel(boolean allowKeypresses) {
 
         setPreferredSize(new Dimension(500, 500));
 
@@ -48,12 +48,12 @@ class GamePanel extends JPanel {
 
     }
 
-    public void move(int direction) {
+    void move(int direction) {
         game.move(direction);
         repaint();
     }
 
-    public void initGame() {
+    void initGame() {
 
         game.initGame();
         game.repaint();
@@ -73,7 +73,7 @@ class GamePanel extends JPanel {
         g.setColor(new Color(0xbbada0));
         g.fillRect(0, 0, 500, 500);
 
-        int[][] grid = game.getGrid();
+        int[][] grid = game.grid;
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {

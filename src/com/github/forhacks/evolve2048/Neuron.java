@@ -1,9 +1,8 @@
 package com.github.forhacks.evolve2048;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Neuron {
+abstract class Neuron {
 
     double up;
     double left;
@@ -20,7 +19,7 @@ public abstract class Neuron {
     List<Integer> parents;
     Layer prev;
 
-    public Neuron(List<Integer> parents, Layer prev) {
+    Neuron(List<Integer> parents, Layer prev) {
 
         this.up = Math.random();
         this.down = Math.random();
@@ -33,19 +32,8 @@ public abstract class Neuron {
 
     }
 
-    public Neuron(Neuron original) {
+    abstract void mutate(Layer prev);
 
-        this.up = original.up;
-        this.left = original.left;
-        this.down = original.down;
-        this.right = original.right;
-
-        this.parents = new ArrayList<>();
-
-    }
-
-    abstract public void mutate(Layer prev);
-
-    abstract public double[] getData();
+    abstract double[] getData();
 
 }

@@ -2,16 +2,16 @@ package com.github.forhacks.evolve2048;
 
 import java.util.List;
 
-public class AndNeuron extends Neuron {
+class AndNeuron extends Neuron {
 
     private static final double MAX_CHANGE = 0.1;
     private static final double ADD_PROB = 0.05;
 
-    public AndNeuron(List<Integer> parents, Layer prev) {
+    AndNeuron(List<Integer> parents, Layer prev) {
         super(parents, prev);
     }
 
-    public AndNeuron(List<Integer> parents, Layer prev, double up, double left, double down, double right) {
+    AndNeuron(List<Integer> parents, Layer prev, double up, double left, double down, double right) {
         super(parents, prev);
         this.up = up;
         this.left = left;
@@ -20,7 +20,7 @@ public class AndNeuron extends Neuron {
     }
 
     @Override
-    public void mutate(Layer prev) {
+    void mutate(Layer prev) {
 
         up += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;
         left += Math.random() * 2 * MAX_CHANGE - MAX_CHANGE;

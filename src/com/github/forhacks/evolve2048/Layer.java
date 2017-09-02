@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Layer {
+class Layer {
 
     private static final int MAX_INIT_NODES=10;
     private static final int MIN_INIT_NODES=4;
@@ -13,10 +13,10 @@ public class Layer {
 
     List<Neuron> neurons;
 
-    public void mutate(Layer prev) {
+    void mutate(Layer prev) {
 
-        for (int i = 0; i < neurons.size(); i++) {
-            neurons.get(i).mutate(prev);
+        for (Neuron n : neurons) {
+            n.mutate(prev);
         }
 
         if (Math.random() < NODE_ADD_PROB) {
@@ -25,7 +25,7 @@ public class Layer {
 
     }
 
-    public Layer(Layer original, Layer prev) {
+    Layer(Layer original, Layer prev) {
 
         neurons = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class Layer {
     }
 
     // Input Neurons
-    public Layer() {
+    Layer() {
 
         neurons = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class Layer {
     }
 
     // [and, max]
-    public Layer(Layer prev) {
+    Layer(Layer prev) {
 
         neurons = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class Layer {
 
     }
 
-    public void addNeuron(Layer prev) {
+    private void addNeuron(Layer prev) {
 
         int n1 = (int) (Math.random() * prev.neurons.size());
         int n2 = (int) (Math.random() * prev.neurons.size());

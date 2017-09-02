@@ -8,21 +8,21 @@ import java.util.Random;
 class Game extends JPanel {
 
     // grid[row][column]
-    public int[][] grid;
+    int[][] grid;
 
     private Random random = new Random();
 
-    public boolean game;
+    boolean game;
 
-    public int score = 0;
+    int score = 0;
 
-    public Game() {
+    Game() {
 
         initGame();
 
     }
 
-    public void initGame() {
+    void initGame() {
 
         grid = new int[4][4];
 
@@ -48,7 +48,7 @@ class Game extends JPanel {
         return false;
     }
 
-    public boolean canMove(int direction) {
+    boolean canMove(int direction) {
 
         if (direction == 0) {
             for (int i = 0; i < 3; i++) {
@@ -87,7 +87,7 @@ class Game extends JPanel {
 
     }
 
-    public int maxTile() {
+    int maxTile() {
 
         int max = 0;
 
@@ -127,13 +127,8 @@ class Game extends JPanel {
 
     }
 
-
-    public int[][] getGrid() {
-        return grid;
-    }
-
     // 0: up; 1: right; 2: down; 3: left
-    public void move(int direction) {
+    void move(int direction) {
 
         int tot = 0;
 
