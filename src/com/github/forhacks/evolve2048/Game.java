@@ -98,7 +98,7 @@ class Game extends JPanel {
 
     }
 
-    public int emptyTileCount() {
+    int emptyTileCount() {
 
         int count = 0;
 

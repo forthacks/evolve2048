@@ -14,7 +14,7 @@ class Layer {
     // 0: and
     // 1: min
     // 3: ipt
-    int type;
+    private int type;
 
     List<Neuron> neurons;
 
