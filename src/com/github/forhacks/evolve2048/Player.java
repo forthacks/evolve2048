@@ -9,7 +9,7 @@ class Player {
 
     private static final int MAX_INIT_LAYER = 5;
     private static final int MIN_INIT_LAYER = 3;
-    private static final double LAYER_ADD_PROB = 0.2;
+    private static final double LAYER_ADD_PROB = 0.05;
 
     List<Layer> layers;
 
