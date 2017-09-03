@@ -11,6 +11,11 @@ class Layer {
     private static final int MIN_INIT_NODES=4;
     private static final double NODE_ADD_PROB = 0.1;
 
+    // 0: and
+    // 1: min
+    // 3: ipt
+    int type;
+
     List<Neuron> neurons;
 
     void mutate(Layer prev) {
@@ -29,12 +34,14 @@ class Layer {
 
         neurons = new ArrayList<>();
 
+        type = original.type;
+
         for (Neuron n : original.neurons) {
-            if (n instanceof AndNeuron)
+            if (type == 0)
                 neurons.add(new AndNeuron(new ArrayList<>(n.parents), prev, n.up, n.left, n.down, n.right));
-            else if (n instanceof MinNeuron)
+            else if (type == 1)
                 neurons.add(new MinNeuron(new ArrayList<>(n.parents), prev));
-            else if (n instanceof InputNeuron)
+            else if (type == 2)
                 neurons.add(new InputNeuron());
         }
 
@@ -44,6 +51,7 @@ class Layer {
     Layer() {
 
         neurons = new ArrayList<>();
+        type = 3;
 
         for (int i = 0; i < 16; i++)
             neurons.add(new InputNeuron());
@@ -52,6 +60,8 @@ class Layer {
 
     // [and, max]
     Layer(Layer prev) {
+
+        type = (prev.type + 1) % 2;
 
         neurons = new ArrayList<>();
 
@@ -71,8 +81,6 @@ class Layer {
         while (n2 == n1) {
             n2 = Main.random.nextInt(prev.neurons.size());
         }
-
-        int type = Main.random.nextInt(2);
 
         if (type == 0)
             this.neurons.add(

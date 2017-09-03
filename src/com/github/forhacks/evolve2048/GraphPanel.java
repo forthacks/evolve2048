@@ -31,7 +31,7 @@ public class GraphPanel extends JPanel {
         FontMetrics fm = g.getFontMetrics();
         g.setStroke(new BasicStroke(1));
 
-        int s;
+        double s;
 
         if (Main.evolution == null || Main.evolution.bests.size() == 0) {
             s = 1000;
@@ -62,10 +62,10 @@ public class GraphPanel extends JPanel {
 
         for (int i = 0; i < s; i++) {
 
-            int score = Main.evolution.bests.get(i);
+            double score = Main.evolution.bests.get(i);
 
             int x = 80 + (int) (((double) i / (Main.evolution.bests.size() - 1)) * 370.0);
-            int y = 450 - (int) (((double) score / Main.evolution.maxscore) * 300.0);
+            int y = 450 - (int) ((score / Main.evolution.maxscore) * 300.0);
 
             //g.fillOval(x, y, 4, 4);
 
@@ -80,10 +80,10 @@ public class GraphPanel extends JPanel {
         g.setColor(Color.BLUE);
         for (int i = 0; i < Main.evolution.bests.size(); i++) {
 
-            int score = Main.evolution.medians.get(i);
+            double score = Main.evolution.medians.get(i);
 
             int x = 80 + (int) (((double) i / (Main.evolution.medians.size() - 1)) * 370.0);
-            int y = 450 - (int) (((double) score / Main.evolution.maxscore) * 300.0);
+            int y = 450 - (int) ((score / Main.evolution.maxscore) * 300.0);
 
             //g.fillOval(x, y, 4, 4);
 

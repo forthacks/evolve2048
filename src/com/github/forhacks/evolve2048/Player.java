@@ -7,15 +7,15 @@ import java.util.List;
 
 class Player {
 
-    private static final int MAX_INIT_LAYER = 4;
-    private static final int MIN_INIT_LAYER = 2;
+    private static final int MAX_INIT_LAYER = 5;
+    private static final int MIN_INIT_LAYER = 3;
     private static final double LAYER_ADD_PROB = 0.2;
 
     List<Layer> layers;
 
     Player() {
 
-        int size = Main.random.nextInt(MAX_INIT_LAYER - MIN_INIT_LAYER) + MIN_INIT_LAYER;
+        int size = Main.random.nextInt((MAX_INIT_LAYER - MIN_INIT_LAYER) / 2) * 2 + MIN_INIT_LAYER;
 
         layers = new ArrayList<>();
 
@@ -85,6 +85,7 @@ class Player {
         }
 
         if (Main.random.nextDouble() < LAYER_ADD_PROB) {
+            layers.add(new Layer(layers.get(layers.size() - 1)));
             layers.add(new Layer(layers.get(layers.size() - 1)));
         }
 

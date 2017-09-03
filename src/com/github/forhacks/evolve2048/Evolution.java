@@ -12,9 +12,9 @@ class Evolution {
     List<Player> bestplayers = new ArrayList<>();
 
     private Player[] players = new Player[PLAYER_NUM];
-    int maxscore = 0;
-    List<Integer> bests = new ArrayList<>();
-    List<Integer> medians = new ArrayList<>();
+    double maxscore = 0;
+    List<Double> bests = new ArrayList<>();
+    List<Double> medians = new ArrayList<>();
 
     private boolean running = false;
 
@@ -36,7 +36,7 @@ class Evolution {
 
                 while (running) {
 
-                    Integer[][] r = run();
+                    double[][] r = run();
 
                     Integer[] indices = new Integer[PLAYER_NUM];
 
@@ -44,7 +44,7 @@ class Evolution {
                         indices[j] = j;
                     }
 
-                    Arrays.sort(indices, Comparator.comparingInt((Integer o) -> (-r[o][0])));
+                    Arrays.sort(indices, Comparator.comparingDouble((Integer o) -> (-r[o][0])));
 
                     Player[] tempPlayers = players.clone();
                     for (int j = 0; j < indices.length; j++) {
@@ -62,12 +62,12 @@ class Evolution {
                     if (r[best][0] > maxscore)
                         maxscore = r[best][0];
 
-                    int median;
+                    double median;
 
-                    Arrays.sort(r, (Integer[] o1, Integer[] o2) -> o2[1].compareTo(o1[1]));
+                    Arrays.sort(r, (double[] o1, double[] o2) -> Double.compare(o2[1], o1[1]));
 
                     if (r.length % 2 == 0)
-                        median = (int) ((double) r[r.length / 2][0] + (double) r[r.length / 2 - 1][0]) / 2;
+                        median = (r[r.length / 2][0] + r[r.length / 2 - 1][0]) / 2;
                     else
                         median = r[r.length / 2][0];
 
@@ -128,9 +128,9 @@ class Evolution {
 
     }
 
-    private Integer[][] run() throws InterruptedException, ExecutionException {
+    private double[][] run() throws InterruptedException, ExecutionException {
 
-        List<Callable<Integer[]>> threads = new ArrayList<>();
+        List<Callable<double[]>> threads = new ArrayList<>();
 
         ExecutorService executor = Executors.newWorkStealingPool();
 
@@ -138,21 +138,58 @@ class Evolution {
 
             final int z = i;
 
-            Callable<Integer[]> thread = () -> {
+            Callable<double[]> thread = () -> {
 
-                int score = 0;
+                double score = 0;
+                double max = 0;
+                double empty = 0;
+                double total = 0;
+
+                List<Callable<double[]>> ts = new ArrayList<>();
+
                 for (int j = 0; j < NUM_TRIAL; j++) {
-                    Game game = new Game();
-                    for (;;) {
-                        if (!game.game) {
-                            break;
+                    Callable<double[]> t2 = () -> {
+                        Game game = new Game();
+                        double gempty = 0;
+                        double gmoves = 0;
+                        double gmax;
+                        for (;;) {
+                            gempty += game.emptyTileCount();
+                            gmoves += 1;
+                            if (!game.game) {
+                                gmax = game.maxTile();
+                                return new double[] {game.score, gmax, gempty, gmoves};
+                            }
+                            int r = players[z].run(game);
+                            game.move(r);
                         }
-                        int r = players[z].run(game);
-                        game.move(r);
-                    }
-                    score += game.score;
+                    };
+                    ts.add(t2);
                 }
-                return new Integer[] {score / NUM_TRIAL, score / NUM_TRIAL};
+
+                List<Future<double[]>> s2 = executor.invokeAll(ts);
+
+                for (int j = 0; j < NUM_TRIAL; j++) {
+                    double[] b = s2.get(j).get();
+                    score += b[0];
+                    max += b[1];
+                    empty += b[2];
+                    total += b[3];
+                }
+
+                double ratio = empty / total / 16;
+
+//                System.out.println("score = " + score);
+//                System.out.println("max = " + max);
+//                System.out.println("empty = " + empty);
+//                System.out.println("total = " + total);
+//                System.out.println("ratio = " + ratio);
+//                System.out.println("total = " + total);
+//                System.out.println();
+
+                double fitness = ratio * 1000 + score + max;
+
+                return new double[] {score / NUM_TRIAL, fitness};
                 // [score, fitness]
 
             };
@@ -161,12 +198,12 @@ class Evolution {
 
         }
 
-        List<Future<Integer[]>> scores = executor.invokeAll(threads);
+        List<Future<double[]>> scores = executor.invokeAll(threads);
 
-        Integer[][] result = new Integer[PLAYER_NUM][2];
+        double[][] result = new double[PLAYER_NUM][2];
 
         for (int i = 0; i < PLAYER_NUM; i++) {
-            Integer[] a = scores.get(i).get();
+            double[] a = scores.get(i).get();
             result[i] = a;
         }
 
